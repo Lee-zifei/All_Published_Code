@@ -1,5 +1,6 @@
 # sfestimateinterference
 根据激发时间对地震数据进行时移动
+```
 /* estimate the interference according to the shot.
 %    Copyright (C) 2025 Chengdu University of Technology.
 %    Copyright (C) 2025 Zifei Li.
@@ -22,4 +23,5 @@
 *    under the terms of the GNU General Public License as published by the Free
 *    Software Foundation, either version 3 of the License, or an later version.
 */
+```
 
