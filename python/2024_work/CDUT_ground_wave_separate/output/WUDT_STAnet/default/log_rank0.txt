@@ -1,0 +1,782 @@
+[2024-12-28 16:41:39 WUDT_STAnet] (main.py 204): INFO Full config saved to output/WUDT_STAnet/default/config.json
+[2024-12-28 16:41:39 WUDT_STAnet] (main.py 207): INFO AMP_OPT_LEVEL: O0
+BASE:
+- ''
+DATA:
+  BATCH_SIZE: 96
+  FINE_TUNE: false
+  IMG_SIZE: 96
+  NUM_WORKERS: 1
+  PIN_MEMORY: true
+DENOISE: 0
+EVAL_MODE: false
+GPU:
+- 0
+LOCAL_RANK: 0
+MODEL:
+  DROP_PATH_RATE: 0.1
+  DROP_RATE: 0.1
+  DT:
+    DEPTHS:
+    - 2
+    - 2
+    - 2
+    - 2
+    EMBED_DIM: 64
+    IN_CHANS: 1
+    MLP_RATIO: 4.0
+    NUM_HEADS:
+    - 3
+    - 6
+    - 12
+    - 24
+    PATCH_NORM: true
+    QKV_BIAS: true
+    QK_SCALE: 0
+    WINDOW_SIZE:
+    - 1
+    - 1
+    - 1
+  DT2:
+    DEPTHS:
+    - 3
+    - 5
+    - 6
+    EMBED_DIM: 64
+    IN_CHANS: 1
+    MLP_RATIO: 4.0
+    NITER:
+    - 1
+    - 1
+    - 1
+    NUM_HEADS:
+    - 1
+    - 2
+    - 16
+    PATCH_NORM: true
+    QKV_BIAS: true
+    QK_SCALE: 0
+    STOKEN_SIZE:
+    - 8
+    - 4
+    - 1
+  NAME: WUDT_STAnet
+  NUM_CLASSES: 1
+  RESUME: ''
+  TYPE: WUDT_STAnet
+OUTPUT: output/WUDT_STAnet/default
+PRINT_FREQ: 1
+SAVE_FREQ: 1
+SEED: 20191110
+TAG: default
+TEST: {}
+TESTF: false
+THROUGHPUT_MODE: false
+TRAIN:
+  ACCUMULATION_STEPS: 0
+  AUTO_RESUME: true
+  BASE_LR: 0.0005
+  CLIP_GRAD: 10
+  EPOCHS: 400
+  LOSS:
+    NAME: MSE
+    WEIGHTH: 0.5
+    WEIGHTV: 0.5
+  LR_SCHEDULER:
+    DECAY_EPOCHS: 30
+    DECAY_RATE: 0.1
+    NAME: cosine
+  MIN_LR: 1.0e-08
+  OPTIMIZER:
+    BETAS:
+    - 0.9
+    - 0.9
+    EPS: 1.0e-08
+    MOMENTUM: 0.9
+    NAME: adamw
+  START_EPOCH: 0
+  USE_CHECKPOINT: false
+  WARMUP_EPOCHS: 5
+  WARMUP_LR: 0.0001
+  WEIGHT_DECAY: 0.05
+VAL: false
+
+[2024-12-28 16:41:46 WUDT_STAnet] (main.py 53): INFO Creating model:WUDT_STAnet/WUDT_STAnet
+[2024-12-28 16:41:47 WUDT_STAnet] (main.py 65): INFO WUDT_STAnet(
+  (patch_embed): OverlapPatchEmbed(
+    (conv): Sequential(
+      (0): Conv2d(1, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (1): LeakyReLU(negative_slope=0.1, inplace=True)
+      (2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (3): LeakyReLU(negative_slope=0.1, inplace=True)
+      (4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (5): LeakyReLU(negative_slope=0.1, inplace=True)
+    )
+    (proj): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1))
+  )
+  (decorder1): Sequential(
+    (0): BasicLayerDT2(
+      (blocks): ModuleList(
+        (0): StokenAttentionLayer(
+          (pos_embed): ResDWC(
+            (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=64)
+          )
+          (norm1): LayerNorm2d(
+            (norm): LayerNorm((64,), eps=1e-06, elementwise_affine=True)
+          )
+          (attn): StokenAttention(
+            (unfold): Unfold()
+            (fold): Fold()
+            (stoken_refine): Attention(
+              (qkv): Conv2d(64, 192, kernel_size=(1, 1), stride=(1, 1))
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1))
+              (proj_drop): Dropout(p=0, inplace=False)
+            )
+          )
+          (drop_path): Identity()
+          (norm2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (mlp2): Mlp(
+            (fc1): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1))
+            (act1): GELU(approximate='none')
+            (fc2): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1))
+            (drop): Dropout(p=0, inplace=False)
+            (conv): ResDWC(
+              (conv): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=256)
+            )
+          )
+        )
+        (1): StokenAttentionLayer(
+          (pos_embed): ResDWC(
+            (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=64)
+          )
+          (norm1): LayerNorm2d(
+            (norm): LayerNorm((64,), eps=1e-06, elementwise_affine=True)
+          )
+          (attn): StokenAttention(
+            (unfold): Unfold()
+            (fold): Fold()
+            (stoken_refine): Attention(
+              (qkv): Conv2d(64, 192, kernel_size=(1, 1), stride=(1, 1))
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1))
+              (proj_drop): Dropout(p=0, inplace=False)
+            )
+          )
+          (drop_path): DropPath(drop_prob=0.046)
+          (norm2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (mlp2): Mlp(
+            (fc1): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1))
+            (act1): GELU(approximate='none')
+            (fc2): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1))
+            (drop): Dropout(p=0, inplace=False)
+            (conv): ResDWC(
+              (conv): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=256)
+            )
+          )
+        )
+        (2): StokenAttentionLayer(
+          (pos_embed): ResDWC(
+            (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=64)
+          )
+          (norm1): LayerNorm2d(
+            (norm): LayerNorm((64,), eps=1e-06, elementwise_affine=True)
+          )
+          (attn): StokenAttention(
+            (unfold): Unfold()
+            (fold): Fold()
+            (stoken_refine): Attention(
+              (qkv): Conv2d(64, 192, kernel_size=(1, 1), stride=(1, 1))
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1))
+              (proj_drop): Dropout(p=0, inplace=False)
+            )
+          )
+          (drop_path): DropPath(drop_prob=0.092)
+          (norm2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (mlp2): Mlp(
+            (fc1): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1))
+            (act1): GELU(approximate='none')
+            (fc2): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1))
+            (drop): Dropout(p=0, inplace=False)
+            (conv): ResDWC(
+              (conv): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=256)
+            )
+          )
+        )
+      )
+    )
+  )
+  (down1): Sequential(
+    (0): Conv2d(64, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (1): DWT()
+  )
+  (decorder2): Sequential(
+    (0): BasicLayerDT2(
+      (blocks): ModuleList(
+        (0): StokenAttentionLayer(
+          (pos_embed): ResDWC(
+            (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=128)
+          )
+          (norm1): LayerNorm2d(
+            (norm): LayerNorm((128,), eps=1e-06, elementwise_affine=True)
+          )
+          (attn): StokenAttention(
+            (unfold): Unfold()
+            (fold): Fold()
+            (stoken_refine): Attention(
+              (qkv): Conv2d(128, 384, kernel_size=(1, 1), stride=(1, 1))
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1))
+              (proj_drop): Dropout(p=0, inplace=False)
+            )
+          )
+          (drop_path): DropPath(drop_prob=0.138)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (mlp2): Mlp(
+            (fc1): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1))
+            (act1): GELU(approximate='none')
+            (fc2): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1))
+            (drop): Dropout(p=0, inplace=False)
+            (conv): ResDWC(
+              (conv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=512)
+            )
+          )
+        )
+        (1): StokenAttentionLayer(
+          (pos_embed): ResDWC(
+            (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=128)
+          )
+          (norm1): LayerNorm2d(
+            (norm): LayerNorm((128,), eps=1e-06, elementwise_affine=True)
+          )
+          (attn): StokenAttention(
+            (unfold): Unfold()
+            (fold): Fold()
+            (stoken_refine): Attention(
+              (qkv): Conv2d(128, 384, kernel_size=(1, 1), stride=(1, 1))
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1))
+              (proj_drop): Dropout(p=0, inplace=False)
+            )
+          )
+          (drop_path): DropPath(drop_prob=0.185)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (mlp2): Mlp(
+            (fc1): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1))
+            (act1): GELU(approximate='none')
+            (fc2): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1))
+            (drop): Dropout(p=0, inplace=False)
+            (conv): ResDWC(
+              (conv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=512)
+            )
+          )
+        )
+        (2): StokenAttentionLayer(
+          (pos_embed): ResDWC(
+            (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=128)
+          )
+          (norm1): LayerNorm2d(
+            (norm): LayerNorm((128,), eps=1e-06, elementwise_affine=True)
+          )
+          (attn): StokenAttention(
+            (unfold): Unfold()
+            (fold): Fold()
+            (stoken_refine): Attention(
+              (qkv): Conv2d(128, 384, kernel_size=(1, 1), stride=(1, 1))
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1))
+              (proj_drop): Dropout(p=0, inplace=False)
+            )
+          )
+          (drop_path): DropPath(drop_prob=0.231)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (mlp2): Mlp(
+            (fc1): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1))
+            (act1): GELU(approximate='none')
+            (fc2): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1))
+            (drop): Dropout(p=0, inplace=False)
+            (conv): ResDWC(
+              (conv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=512)
+            )
+          )
+        )
+        (3): StokenAttentionLayer(
+          (pos_embed): ResDWC(
+            (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=128)
+          )
+          (norm1): LayerNorm2d(
+            (norm): LayerNorm((128,), eps=1e-06, elementwise_affine=True)
+          )
+          (attn): StokenAttention(
+            (unfold): Unfold()
+            (fold): Fold()
+            (stoken_refine): Attention(
+              (qkv): Conv2d(128, 384, kernel_size=(1, 1), stride=(1, 1))
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1))
+              (proj_drop): Dropout(p=0, inplace=False)
+            )
+          )
+          (drop_path): DropPath(drop_prob=0.277)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (mlp2): Mlp(
+            (fc1): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1))
+            (act1): GELU(approximate='none')
+            (fc2): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1))
+            (drop): Dropout(p=0, inplace=False)
+            (conv): ResDWC(
+              (conv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=512)
+            )
+          )
+        )
+        (4): StokenAttentionLayer(
+          (pos_embed): ResDWC(
+            (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=128)
+          )
+          (norm1): LayerNorm2d(
+            (norm): LayerNorm((128,), eps=1e-06, elementwise_affine=True)
+          )
+          (attn): StokenAttention(
+            (unfold): Unfold()
+            (fold): Fold()
+            (stoken_refine): Attention(
+              (qkv): Conv2d(128, 384, kernel_size=(1, 1), stride=(1, 1))
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1))
+              (proj_drop): Dropout(p=0, inplace=False)
+            )
+          )
+          (drop_path): DropPath(drop_prob=0.323)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (mlp2): Mlp(
+            (fc1): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1))
+            (act1): GELU(approximate='none')
+            (fc2): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1))
+            (drop): Dropout(p=0, inplace=False)
+            (conv): ResDWC(
+              (conv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=512)
+            )
+          )
+        )
+      )
+    )
+  )
+  (down2): Sequential(
+    (0): Conv2d(128, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (1): DWT()
+  )
+  (center): Sequential(
+    (0): BasicLayerDT1(
+      dim=256, input_resolution=(24, 24), depth=6
+      (blocks): ModuleList(
+        (0): SwinTransformerBlock(
+          dim=256, input_resolution=(24, 24), num_heads=16, window_size=(24, 1), mlp_ratio=4.0
+          (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (attn): WindowAttention(
+            dim=256, window_size=(24, 1), num_heads=16
+            (qkv): Linear(in_features=256, out_features=768, bias=True)
+            (softmax): Softmax(dim=-1)
+            (attn_drop): Dropout(p=0.0, inplace=False)
+            (proj): Linear(in_features=256, out_features=256, bias=True)
+            (proj_drop): Dropout(p=0, inplace=False)
+          )
+          (drop_path): DropPath(drop_prob=0.200)
+          (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (mlp): Mlp_nores(
+            (fc1): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1))
+            (dwconv): DWConv(
+              (dwconv): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=1024)
+            )
+            (act): GELU(approximate='none')
+            (fc2): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1))
+            (drop): Dropout(p=0, inplace=False)
+          )
+        )
+        (1): SwinTransformerBlock(
+          dim=256, input_resolution=(24, 24), num_heads=16, window_size=(1, 24), mlp_ratio=4.0
+          (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (attn): WindowAttention(
+            dim=256, window_size=(1, 24), num_heads=16
+            (qkv): Linear(in_features=256, out_features=768, bias=True)
+            (softmax): Softmax(dim=-1)
+            (attn_drop): Dropout(p=0.0, inplace=False)
+            (proj): Linear(in_features=256, out_features=256, bias=True)
+            (proj_drop): Dropout(p=0, inplace=False)
+          )
+          (drop_path): DropPath(drop_prob=0.200)
+          (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (mlp): Mlp_nores(
+            (fc1): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1))
+            (dwconv): DWConv(
+              (dwconv): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=1024)
+            )
+            (act): GELU(approximate='none')
+            (fc2): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1))
+            (drop): Dropout(p=0, inplace=False)
+          )
+        )
+        (2): SwinTransformerBlock(
+          dim=256, input_resolution=(24, 24), num_heads=16, window_size=(8, 8), mlp_ratio=4.0
+          (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (attn): WindowAttention(
+            dim=256, window_size=(8, 8), num_heads=16
+            (qkv): Linear(in_features=256, out_features=768, bias=True)
+            (softmax): Softmax(dim=-1)
+            (attn_drop): Dropout(p=0.0, inplace=False)
+            (proj): Linear(in_features=256, out_features=256, bias=True)
+            (proj_drop): Dropout(p=0, inplace=False)
+          )
+          (drop_path): DropPath(drop_prob=0.200)
+          (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (mlp): Mlp_nores(
+            (fc1): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1))
+            (dwconv): DWConv(
+              (dwconv): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=1024)
+            )
+            (act): GELU(approximate='none')
+            (fc2): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1))
+            (drop): Dropout(p=0, inplace=False)
+          )
+        )
+        (3): SwinTransformerBlock(
+          dim=256, input_resolution=(24, 24), num_heads=16, window_size=(24, 1), mlp_ratio=4.0
+          (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (attn): WindowAttention(
+            dim=256, window_size=(24, 1), num_heads=16
+            (qkv): Linear(in_features=256, out_features=768, bias=True)
+            (softmax): Softmax(dim=-1)
+            (attn_drop): Dropout(p=0.0, inplace=False)
+            (proj): Linear(in_features=256, out_features=256, bias=True)
+            (proj_drop): Dropout(p=0, inplace=False)
+          )
+          (drop_path): DropPath(drop_prob=0.200)
+          (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (mlp): Mlp_nores(
+            (fc1): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1))
+            (dwconv): DWConv(
+              (dwconv): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=1024)
+            )
+            (act): GELU(approximate='none')
+            (fc2): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1))
+            (drop): Dropout(p=0, inplace=False)
+          )
+        )
+        (4): SwinTransformerBlock(
+          dim=256, input_resolution=(24, 24), num_heads=16, window_size=(1, 24), mlp_ratio=4.0
+          (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (attn): WindowAttention(
+            dim=256, window_size=(1, 24), num_heads=16
+            (qkv): Linear(in_features=256, out_features=768, bias=True)
+            (softmax): Softmax(dim=-1)
+            (attn_drop): Dropout(p=0.0, inplace=False)
+            (proj): Linear(in_features=256, out_features=256, bias=True)
+            (proj_drop): Dropout(p=0, inplace=False)
+          )
+          (drop_path): DropPath(drop_prob=0.200)
+          (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (mlp): Mlp_nores(
+            (fc1): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1))
+            (dwconv): DWConv(
+              (dwconv): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=1024)
+            )
+            (act): GELU(approximate='none')
+            (fc2): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1))
+            (drop): Dropout(p=0, inplace=False)
+          )
+        )
+        (5): SwinTransformerBlock(
+          dim=256, input_resolution=(24, 24), num_heads=16, window_size=(8, 8), mlp_ratio=4.0
+          (norm1): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (attn): WindowAttention(
+            dim=256, window_size=(8, 8), num_heads=16
+            (qkv): Linear(in_features=256, out_features=768, bias=True)
+            (softmax): Softmax(dim=-1)
+            (attn_drop): Dropout(p=0.0, inplace=False)
+            (proj): Linear(in_features=256, out_features=256, bias=True)
+            (proj_drop): Dropout(p=0, inplace=False)
+          )
+          (drop_path): DropPath(drop_prob=0.200)
+          (norm2): LayerNorm((256,), eps=1e-05, elementwise_affine=True)
+          (mlp): Mlp_nores(
+            (fc1): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1))
+            (dwconv): DWConv(
+              (dwconv): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=1024)
+            )
+            (act): GELU(approximate='none')
+            (fc2): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1))
+            (drop): Dropout(p=0, inplace=False)
+          )
+        )
+      )
+      (conv): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (act): LeakyReLU(negative_slope=0.1, inplace=True)
+    )
+  )
+  (up2): Sequential(
+    (0): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (1): IWT()
+  )
+  (reduce_channel2): ReduceChannel(
+    (conv): Conv2d(256, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  )
+  (encoder2): Sequential(
+    (0): BasicLayerDT2(
+      (blocks): ModuleList(
+        (0): StokenAttentionLayer(
+          (pos_embed): ResDWC(
+            (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=128)
+          )
+          (norm1): LayerNorm2d(
+            (norm): LayerNorm((128,), eps=1e-06, elementwise_affine=True)
+          )
+          (attn): StokenAttention(
+            (unfold): Unfold()
+            (fold): Fold()
+            (stoken_refine): Attention(
+              (qkv): Conv2d(128, 384, kernel_size=(1, 1), stride=(1, 1))
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1))
+              (proj_drop): Dropout(p=0, inplace=False)
+            )
+          )
+          (drop_path): DropPath(drop_prob=0.138)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (mlp2): Mlp(
+            (fc1): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1))
+            (act1): GELU(approximate='none')
+            (fc2): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1))
+            (drop): Dropout(p=0, inplace=False)
+            (conv): ResDWC(
+              (conv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=512)
+            )
+          )
+        )
+        (1): StokenAttentionLayer(
+          (pos_embed): ResDWC(
+            (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=128)
+          )
+          (norm1): LayerNorm2d(
+            (norm): LayerNorm((128,), eps=1e-06, elementwise_affine=True)
+          )
+          (attn): StokenAttention(
+            (unfold): Unfold()
+            (fold): Fold()
+            (stoken_refine): Attention(
+              (qkv): Conv2d(128, 384, kernel_size=(1, 1), stride=(1, 1))
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1))
+              (proj_drop): Dropout(p=0, inplace=False)
+            )
+          )
+          (drop_path): DropPath(drop_prob=0.185)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (mlp2): Mlp(
+            (fc1): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1))
+            (act1): GELU(approximate='none')
+            (fc2): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1))
+            (drop): Dropout(p=0, inplace=False)
+            (conv): ResDWC(
+              (conv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=512)
+            )
+          )
+        )
+        (2): StokenAttentionLayer(
+          (pos_embed): ResDWC(
+            (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=128)
+          )
+          (norm1): LayerNorm2d(
+            (norm): LayerNorm((128,), eps=1e-06, elementwise_affine=True)
+          )
+          (attn): StokenAttention(
+            (unfold): Unfold()
+            (fold): Fold()
+            (stoken_refine): Attention(
+              (qkv): Conv2d(128, 384, kernel_size=(1, 1), stride=(1, 1))
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1))
+              (proj_drop): Dropout(p=0, inplace=False)
+            )
+          )
+          (drop_path): DropPath(drop_prob=0.231)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (mlp2): Mlp(
+            (fc1): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1))
+            (act1): GELU(approximate='none')
+            (fc2): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1))
+            (drop): Dropout(p=0, inplace=False)
+            (conv): ResDWC(
+              (conv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=512)
+            )
+          )
+        )
+        (3): StokenAttentionLayer(
+          (pos_embed): ResDWC(
+            (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=128)
+          )
+          (norm1): LayerNorm2d(
+            (norm): LayerNorm((128,), eps=1e-06, elementwise_affine=True)
+          )
+          (attn): StokenAttention(
+            (unfold): Unfold()
+            (fold): Fold()
+            (stoken_refine): Attention(
+              (qkv): Conv2d(128, 384, kernel_size=(1, 1), stride=(1, 1))
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1))
+              (proj_drop): Dropout(p=0, inplace=False)
+            )
+          )
+          (drop_path): DropPath(drop_prob=0.277)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (mlp2): Mlp(
+            (fc1): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1))
+            (act1): GELU(approximate='none')
+            (fc2): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1))
+            (drop): Dropout(p=0, inplace=False)
+            (conv): ResDWC(
+              (conv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=512)
+            )
+          )
+        )
+        (4): StokenAttentionLayer(
+          (pos_embed): ResDWC(
+            (conv): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=128)
+          )
+          (norm1): LayerNorm2d(
+            (norm): LayerNorm((128,), eps=1e-06, elementwise_affine=True)
+          )
+          (attn): StokenAttention(
+            (unfold): Unfold()
+            (fold): Fold()
+            (stoken_refine): Attention(
+              (qkv): Conv2d(128, 384, kernel_size=(1, 1), stride=(1, 1))
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1))
+              (proj_drop): Dropout(p=0, inplace=False)
+            )
+          )
+          (drop_path): DropPath(drop_prob=0.323)
+          (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (mlp2): Mlp(
+            (fc1): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1))
+            (act1): GELU(approximate='none')
+            (fc2): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1))
+            (drop): Dropout(p=0, inplace=False)
+            (conv): ResDWC(
+              (conv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=512)
+            )
+          )
+        )
+      )
+    )
+  )
+  (up1): Sequential(
+    (0): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (1): IWT()
+  )
+  (reduce_channel1): ReduceChannel(
+    (conv): Conv2d(128, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+  )
+  (encoder1): Sequential(
+    (0): BasicLayerDT2(
+      (blocks): ModuleList(
+        (0): StokenAttentionLayer(
+          (pos_embed): ResDWC(
+            (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=64)
+          )
+          (norm1): LayerNorm2d(
+            (norm): LayerNorm((64,), eps=1e-06, elementwise_affine=True)
+          )
+          (attn): StokenAttention(
+            (unfold): Unfold()
+            (fold): Fold()
+            (stoken_refine): Attention(
+              (qkv): Conv2d(64, 192, kernel_size=(1, 1), stride=(1, 1))
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1))
+              (proj_drop): Dropout(p=0, inplace=False)
+            )
+          )
+          (drop_path): Identity()
+          (norm2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (mlp2): Mlp(
+            (fc1): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1))
+            (act1): GELU(approximate='none')
+            (fc2): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1))
+            (drop): Dropout(p=0, inplace=False)
+            (conv): ResDWC(
+              (conv): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=256)
+            )
+          )
+        )
+        (1): StokenAttentionLayer(
+          (pos_embed): ResDWC(
+            (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=64)
+          )
+          (norm1): LayerNorm2d(
+            (norm): LayerNorm((64,), eps=1e-06, elementwise_affine=True)
+          )
+          (attn): StokenAttention(
+            (unfold): Unfold()
+            (fold): Fold()
+            (stoken_refine): Attention(
+              (qkv): Conv2d(64, 192, kernel_size=(1, 1), stride=(1, 1))
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1))
+              (proj_drop): Dropout(p=0, inplace=False)
+            )
+          )
+          (drop_path): DropPath(drop_prob=0.046)
+          (norm2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (mlp2): Mlp(
+            (fc1): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1))
+            (act1): GELU(approximate='none')
+            (fc2): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1))
+            (drop): Dropout(p=0, inplace=False)
+            (conv): ResDWC(
+              (conv): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=256)
+            )
+          )
+        )
+        (2): StokenAttentionLayer(
+          (pos_embed): ResDWC(
+            (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=64)
+          )
+          (norm1): LayerNorm2d(
+            (norm): LayerNorm((64,), eps=1e-06, elementwise_affine=True)
+          )
+          (attn): StokenAttention(
+            (unfold): Unfold()
+            (fold): Fold()
+            (stoken_refine): Attention(
+              (qkv): Conv2d(64, 192, kernel_size=(1, 1), stride=(1, 1))
+              (attn_drop): Dropout(p=0.0, inplace=False)
+              (proj): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1))
+              (proj_drop): Dropout(p=0, inplace=False)
+            )
+          )
+          (drop_path): DropPath(drop_prob=0.092)
+          (norm2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (mlp2): Mlp(
+            (fc1): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1))
+            (act1): GELU(approximate='none')
+            (fc2): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1))
+            (drop): Dropout(p=0, inplace=False)
+            (conv): ResDWC(
+              (conv): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=256)
+            )
+          )
+        )
+      )
+    )
+  )
+  (decoder): Decoder(
+    (out): Conv2d(64, 1, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  )
+)
+[2024-12-28 16:41:47 WUDT_STAnet] (main.py 70): INFO number of params: 9452577
+[2024-12-28 16:41:47 WUDT_STAnet] (main.py 83): INFO auto resuming from output/WUDT_STAnet/default/ckpt_epoch_599.pth
+[2024-12-28 16:41:47 WUDT_STAnet] (utils.py 10): INFO ==============> Resuming form output/WUDT_STAnet/default/ckpt_epoch_599.pth....................
+[2024-12-28 16:41:48 WUDT_STAnet] (utils.py 17): INFO <All keys matched successfully>
+[2024-12-28 16:41:48 WUDT_STAnet] (utils.py 27): INFO => loaded successfully 'output/WUDT_STAnet/default/ckpt_epoch_599.pth' (epoch 599)

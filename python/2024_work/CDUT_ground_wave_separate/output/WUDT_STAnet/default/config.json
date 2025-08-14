@@ -1,0 +1,101 @@
+AMP_OPT_LEVEL: O0
+BASE:
+- ''
+DATA:
+  BATCH_SIZE: 96
+  FINE_TUNE: false
+  IMG_SIZE: 96
+  NUM_WORKERS: 1
+  PIN_MEMORY: true
+DENOISE: 0
+EVAL_MODE: false
+GPU:
+- 0
+LOCAL_RANK: 0
+MODEL:
+  DROP_PATH_RATE: 0.1
+  DROP_RATE: 0.1
+  DT:
+    DEPTHS:
+    - 2
+    - 2
+    - 2
+    - 2
+    EMBED_DIM: 64
+    IN_CHANS: 1
+    MLP_RATIO: 4.0
+    NUM_HEADS:
+    - 3
+    - 6
+    - 12
+    - 24
+    PATCH_NORM: true
+    QKV_BIAS: true
+    QK_SCALE: 0
+    WINDOW_SIZE:
+    - 1
+    - 1
+    - 1
+  DT2:
+    DEPTHS:
+    - 3
+    - 5
+    - 6
+    EMBED_DIM: 64
+    IN_CHANS: 1
+    MLP_RATIO: 4.0
+    NITER:
+    - 1
+    - 1
+    - 1
+    NUM_HEADS:
+    - 1
+    - 2
+    - 16
+    PATCH_NORM: true
+    QKV_BIAS: true
+    QK_SCALE: 0
+    STOKEN_SIZE:
+    - 8
+    - 4
+    - 1
+  NAME: WUDT_STAnet
+  NUM_CLASSES: 1
+  RESUME: ''
+  TYPE: WUDT_STAnet
+OUTPUT: output/WUDT_STAnet/default
+PRINT_FREQ: 1
+SAVE_FREQ: 1
+SEED: 20191110
+TAG: default
+TEST: {}
+TESTF: false
+THROUGHPUT_MODE: false
+TRAIN:
+  ACCUMULATION_STEPS: 0
+  AUTO_RESUME: true
+  BASE_LR: 0.0005
+  CLIP_GRAD: 10
+  EPOCHS: 400
+  LOSS:
+    NAME: MSE
+    WEIGHTH: 0.5
+    WEIGHTV: 0.5
+  LR_SCHEDULER:
+    DECAY_EPOCHS: 30
+    DECAY_RATE: 0.1
+    NAME: cosine
+  MIN_LR: 1.0e-08
+  OPTIMIZER:
+    BETAS:
+    - 0.9
+    - 0.9
+    EPS: 1.0e-08
+    MOMENTUM: 0.9
+    NAME: adamw
+  START_EPOCH: 0
+  USE_CHECKPOINT: false
+  WARMUP_EPOCHS: 5
+  WARMUP_LR: 0.0001
+  WEIGHT_DECAY: 0.05
+VAL: false
