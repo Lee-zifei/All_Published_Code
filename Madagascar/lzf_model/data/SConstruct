@@ -1,0 +1,87 @@
+from rsf.proj import *
+import sys, os, platform
+if 'macos' in platform.platform().lower(): 
+    myprog_path='/Users/lzf/Documents/cdut_zsh_group/python/subfuctions' 
+elif 'linux' in platform.platform().lower(): 
+    myprog_path='/media/lzf/Work/code/python' 
+    myprog_path_survey='/home/lzf/code/python' 
+else: 
+    myprog_path='L:\data\python' 
+sys.path.append(myprog_path)
+#  sys.path.append(myprog_path_survey)
+from subfunctions import *  
+  
+  
+  
+  
+###########################################################################################
+def result (data,other):
+    Result (data,
+             '''
+             grey title=%s label1='Time' unit1='s' label2='Trace' unit2=''
+             color=g screenratio=0.5 wanttitle=n pclip=99 bar=y scalebar=n
+             %s 
+             '''%(data,other))
+def plot (data,other):
+    Plot (data,
+             '''
+             grey title=%s label1='Time' unit1='s' label2='Trace' unit2=''
+             color=g screenratio=0.5 wanttitle=n clip=3 bar=y scalebar=n
+             %s 
+             '''%(data,other))
+def result3 (data, other):
+     Result (data,
+            '''
+            byte pclip=99 bar=bar.rsf %s| grey3 frame1=150 frame2=50 frame3=15
+            title='' label1='Time' unit1='s' label2='X' unit2='' label3='Y' unit3=''
+            flat=n wantaxis=y wanttitle=n color=g point1=0.85 point2=0.64 screenratio=1.5
+            '''%(other))
+def plot3 (data, other):
+     Plot (data,
+            '''
+            byte clip=3e+6 bar=bar.rsf %s| grey3 frame1=150 frame2=50 frame3=15
+            title='' label1='Time' unit1='s' label2='X' unit2='' label3='Y' unit3=''
+            flat=n wantaxis=y wanttitle=n color=g point1=0.85 point2=0.64 screenratio=1.5 o1num=0 d1num=2 n1tic=3 
+            '''%(other))
+def wig (data, other):
+    Result (data,
+            '''
+            wiggle title=%s transp=y yreverse=y label1='Time' unit1='s' label2='Trace' unit2=''
+            screenratio=1
+            %s
+            '''%(data, other))
+def graph (data, other):
+    Result (data,
+            '''
+            graph title=%s label1='Frequency' unit1='Hz' label2='Amplitude' unit2='' screenratio=0.5
+            %s
+            '''%(data, other))
+###########################################################################################
+import os
+i=0
+# for i in range (10):
+crg1 = 'crg1_%d'%(i+1)
+crg2 = 'crg2_%d'%(i+1)
+blcrg1 = 'blcrg1%d'%(i+1)
+blcrg2 = 'blcrg2%d'%(i+1)
+clip = 10
+scr=1
+dt = 2e-3
+
+Flow ('crg1', 'deblend1_%d.dat'%(i+1),'bin2rsf n1=3200 n2=344')
+Flow ('crg2', 'data21.dat','bin2rsf n1=3200 n2=344')
+result ('crg1', 'screenratio=%d  clip=%d'%(scr,clip))
+result ('crg2', 'screenratio=%d  clip=%d'%(scr,clip))
+
+Flow ('time1', 'maintime.dat','bin2rsf n1=344 n2=1 d1=1')
+Flow ('time2', 'assitime.dat','bin2rsf n1=344 n2=1 d1=1')
+
+Flow ('temp_blcrg1','crg1 time1 time2','estimateinterference maintime_file=${SOURCES[1]} assisttime_file=${SOURCES[2]} dt=%f'%(dt))
+Flow ('blend1',['temp_blcrg1','crg2'],'add scale=1,1 ${SOURCES[1]}')
+Flow ('blend2','blend1 time2 time1','estimateinterference maintime_file=${SOURCES[1]} assisttime_file=${SOURCES[2]} dt=%f'%(dt))
+result ('blend1', 'screenratio=%d  clip=%d'%(scr,clip))
+result ('blend2', 'screenratio=%d  clip=%d'%(scr,clip))
+
+End ()
+
+
