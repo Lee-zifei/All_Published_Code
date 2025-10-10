@@ -1,0 +1,125 @@
+from rsf.proj import *
+###########################################################################################
+def result (data,other):
+    Result (data,
+             '''
+             grey title=%s label1='Time' unit1='s' label2='Trace' unit2=''
+             color=g screenratio=1.5 wanttitle=n clip=3e-3 bar=y scalebar=n
+             %s
+             '''%(data,other))
+def plot (data,other):
+    Plot (data,
+             '''
+             grey title=%s label1='Time' unit1='s' label2='Trace' unit2=''
+             color=g screenratio=1.5 wanttitle=n clip=3 bar=y scalebar=n
+             %s
+             '''%(data,other))
+def result3 (data, other):
+     Result (data,
+            '''
+            byte clip=5000 bar=bar.rsf %s | grey3 frame1=200 frame2=100 frame3=50
+            title='' label1='Time' unit1='s' label2='X' unit2='' label3='Y' unit3=''
+            flat=n wantaxis=y wanttitle=n color=g point1=0.85 point2=0.64 screenratio=1.5
+            '''%(other))
+def plot3 (data, other):
+     Plot (data,
+            '''
+            byte clip=3e+6 bar=bar.rsf %s| grey3 frame1=150 frame2=50 frame3=15
+            title='' label1='Time' unit1='s' label2='X' unit2='' label3='Y' unit3=''
+            flat=n wantaxis=x wanttitle=n color=g point1=0.85 point2=0.64 screenratio=1.5
+            '''%(other))
+def wig (data, other):
+    Result (data,
+            '''
+            wiggle title=%s transp=y yreverse=y label1='Time' unit1='s' label2='Trace' unit2=''
+            screenratio=1
+            %s
+            '''%(data, other))
+def graph (data, other):
+    Result (data,
+            '''
+            graph title=%s label1='Frequency' unit1='Hz' label2='Amplitude' unit2='' screenratio=0.5
+            %s
+            '''%(data, other))
+###########################################################################################
+
+print ("===================================================================================")
+print ("Display survey parameters")
+print ("===================================================================================")
+#  parafile = '../parameters.txt'
+#  with open(parafile, "r") as f:
+#      for line in f:
+#          print (line)
+#
+dz=10
+dx=1
+n1 = 1001
+n2 = 401
+ns = 100
+dr=1
+ds=1*dx
+
+csgs= []
+sxs = []
+rxs = []
+offsets = []
+inlines = []
+xline = []
+traces=[]
+ssums=[]
+
+Flow ('data_y tdata_y','../data/item2_mig.sgy','segyread tfile=${TARGETS[1]}')
+Flow ('3ddata_y','data_y tdata_y','intbin4 xkey=5 ykey=73')
+
+Flow ('rx', None, 'spike n1=1 n2=401|put d2=1|math "output=x2*%d+%d"'%(dr,dr))
+Flow ('cross', None, 'spike n1=1 n2=401|put d2=1|math "output=1"')
+
+# # read bin data and generate head information
+for i in range(ns):
+    csg= 'csg%d'%i
+    sx = 'sx%d'%(i+1)
+    rx = 'rx%d'%(i+1)
+    inline = 'inline%d'%(i+1)
+    offset = 'offset%d'%(i+1)
+    trace = 'trace%d'%(i+1)
+    ssum = 'ssum%d'%(i+1)
+    Flow (csg, '3ddata_y', 'window n3=1 f3=%d'%(i+1))
+    Flow (sx, csg, 'window n1=1|math output="%d"|transp'%((i)*ds))
+    Flow (inline, csg, 'window n1=1|math output="1"|transp')
+    Flow (trace, csg, 'window n1=1|math output="40501"|transp')
+    Flow (ssum, csg, 'window n1=1|math output="50"|transp')
+    Flow (offset, [sx, 'rx'], 'add scale=1,-1 ${SOURCES[1]}')
+    # result (csg, 'clip=1e-3')
+    csgs.append(csg)
+    sxs.append(sx)
+    rxs.append('rx')
+    traces.append(trace)
+    ssums.append(ssum)
+    inlines.append(inline)
+    xline.append('cross')
+    offsets.append(offset)
+    
+Flow ('csgs', csgs, 'cat axis=2 ${SOURCES[1:%d]}'%len(csgs))
+Flow ('sxs', sxs, 'cat axis=2 ${SOURCES[1:%d]}|dd type=int'%len(sxs))
+Flow ('rxs', rxs, 'cat axis=2 ${SOURCES[1:%d]}|dd type=int'%len(rxs))
+Flow ('offsets', offsets, 'cat axis=2 ${SOURCES[1:%d]}|dd type=int'%len(offsets))
+Flow ('inlines', inlines, 'cat axis=2 ${SOURCES[1:%d]}|dd type=int'%len(inlines))
+Flow ('xline', xline, 'cat axis=2 ${SOURCES[1:%d]}|dd type=int'%len(xline))
+Flow ('traces',traces,'cat axis=2 ${SOURCES[1:%d]}|dd type=int'%len(traces))
+Flow ('ssums',ssums,'cat axis=2 ${SOURCES[1:%d]}|dd type=int'%len(ssums))
+Flow ('isx', 'sxs', 'dd type=float')
+Flow ('irx', 'rxs', 'dd type=float')
+Flow ('cdpxs', 'isx irx', 'math in1=${SOURCES[1]} output="(in+in1)/2"|dd type=int')
+
+# # # combine all header information into header
+Flow ('tdata', 'csgs sxs rxs offsets inlines xline cdpxs traces ssums', 'segyheader sx=${SOURCES[1]} gx=${SOURCES[2]} offset=${SOURCES[3]} iline=${SOURCES[4]} xline=${SOURCES[5]} cdpx=${SOURCES[6]} tracl=${SOURCES[7]} cdpy=${SOURCES[8]} ')
+Flow ('../data/segy_new.segy','csgs tdata', 'segywrite tfile=${SOURCES[1]}')
+
+
+Flow ('3ddata', 'csgs tdata', 'intbin4 head=${SOURCES[1]} xkey=21 dx=%d ykey=23 dy=%d rkey=73 dr=1 skey=74 ds=1'%(ds,dr))
+Flow ('t3ddata', 'tdata tdata', 'intbin4 head=${SOURCES[1]} xkey=21 dx=%d ykey=23 dy=%d rkey=73 dr=1 skey=74 ds=1'%(ds,dr))
+
+result3 ('3ddata', '')
+#result3 ('t3ddata', '')
+
+End ()
