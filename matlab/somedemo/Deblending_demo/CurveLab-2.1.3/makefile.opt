@@ -1,0 +1,37 @@
+# ----------------------------machine dependent file
+MODE = optim
+
+# extern library and program variables
+FFTW_DIR = /home/zsh/softwares
+MEX 		= 	mex
+
+# compiler and linker variable 
+INCLUDES =	-I${FFTW_DIR}/fftw/include
+
+LIBS = 		-L${FFTW_DIR}/fftw/lib -lfftw
+
+
+PETSC_DIR = /home/zsh/petsc/
+
+AR = ar
+ARFLAGS = -r
+
+CC  = gcc
+CXX = g++
+
+# -Wall -Wno-sign-compare 
+CFLAGS   = -g -Wall -W -Wno-sign-compare -Wno-unused-label -MMD -fPIC ${INCLUDES} 
+CXXFLAGS = -g -Wall -W -Wno-sign-compare -Wno-unused-label -MMD -fPIC ${INCLUDES}
+ifeq ($(MODE),debug)
+else
+	CFLAGS 	+= -O4 -DNDEBUG
+	CXXFLAGS += -O4 -DNDEBUG
+endif
+
+LDFLAGS = -fPIC ${LIBS}
+
+RANLIB = ranlib
+
+# rules
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $*.cpp

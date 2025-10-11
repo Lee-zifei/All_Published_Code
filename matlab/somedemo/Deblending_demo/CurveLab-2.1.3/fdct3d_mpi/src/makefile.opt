@@ -1,0 +1,51 @@
+# ----------------------------machine dependent file
+MODE = optim
+
+# extern library and program variables
+FFTW_DIR = 	/usr/local
+MEX 		=	mex
+PETSC_DIR = /home/zsh/petsc
+
+PETSC_INCLUDE = /home/zsh/software/PETSc/include
+
+
+#include ${PETSC_DIR}/bmake/variables
+include ${PETSC_DIR}/lib/petsc/conf/variables
+
+# compiler and linker variable 
+INCLUDES =	-I${FFTW_DIR}/fftw	 -I/home/zsh/petsc/include
+#	-I/usr/include/lam
+
+LIBS = 		-L${FFTW_DIR}/fftw/.libs -lfftw \
+	-Wl,-rpath,${PETSC_DIR}/arch-linux2-c-debug /home/zsh/software/PETSc/lib
+
+AR = ar
+ARFLAGS = -r
+
+CC  = gcc5
+CXX = g++5
+
+# Petsc related
+ifeq ($(MODE),debug)	
+	BOPT = g_c++
+else
+	BOPT = O_c++
+endif
+
+PETSC_CXXFLAGS	=  -DPETSC_USE_DEBUG  -DPETSC_USE_LOG -DPETSC_USE_STACK
+#-DPETSC_USE_COMPLEX
+
+CXXFLAGS = -g -Wall -W -Wno-sign-compare -Wno-unused-label -MMD $(PETSC_CXXFLAGS) ${INCLUDES}
+
+ifeq ($(MODE),debug)
+else
+	CXXFLAGS += -O3 -DNDEBUG
+endif
+
+LDFLAGS = ${LIBS}
+
+RANLIB = ranlib
+
+# rules
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $*.cpp
