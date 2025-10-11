@@ -1,7 +1,0 @@
-4.2-git	sfsegyread	python/somedemo/segydemo:	lzf@lzf	Fri Mar 21 15:55:14 2025
-
-	n2=40501
-	data_format="native_int"
-	esize=4
-	in="/media/lzf/Work/data/RSFDATA/data/python/somedemo/segydemo/tdata.rsf@"
-	n1=91
