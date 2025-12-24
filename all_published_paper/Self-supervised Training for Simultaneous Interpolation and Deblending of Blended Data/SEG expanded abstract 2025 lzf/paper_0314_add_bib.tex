@@ -1,0 +1,232 @@
+\documentclass{segabs}
+\usepackage{mathrsfs}
+\usepackage{amsmath}
+
+% \usepackage{etoolbox}
+% \usepackage{natbib}
+% \usepackage{biblatex}
+% An example of defining macros
+\newcommand{\rs}[1]{\mathstrut\mbox{\scriptsize\rm #1}}
+\newcommand{\rr}[1]{\mbox{\rm #1}}
+
+\begin{document}
+
+\title{Self-supervised Training for Simultaneous Interpolation and Deblending of Blended Data}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}} 
+
+\author{
+Zifei Li\footnotemark[2]\footnotemark[1],
+Shaohuan Zu\footnotemark[2], 
+Wanting Shen\footnotemark[2],
+Jiale Kang\footnotemark[2],
+and
+Jingxiao Wang\footnotemark[2]
+\\
+\footnotemark[2]Chengdu University of Technology, Chengdu, China
+}
+% \author{rua!}
+
+% \footer{Example}
+% \lefthead{Dellinger \& Fomel}
+\righthead{Self-supervised Training for Simultaneous Interpolation and Deblending of Blended Data}
+
+\maketitle
+
+\begin{abstract}
+Deep learning technology has been widely applied in the processing of multi-source blended data, including the deblending of blended data and the interpolation of missing traces. When dealing with blended data, it is often necessary to address the issues of blending noise and missing traces. There are typically two approaches for processing such data: compressed sensing theory and deep learning. However, compressed sensing methods require extensive analysis and parameter tuning, while deep learning methods require large datasets or, in the case of self-supervised methods, often require specific adjustments to the network model. To simplify the problem of simultaneous interpolation and separation of blended data, we propose a self-supervised training method that can achieve relatively high-quality results without the need for prior analysis of the data or adjustments to the network model. We conducted experiments using a set of synthetic data and a set of real data to validate our results.%处理这样的数据通常有基于压缩感知理论的方法和基于深度学习的方法。但是压缩感知的方法需要大量分析以及调整参数，深度学习的方法需要大量的数据集，或者使用自监督的方法大多也需要对网络模型作特定的调整。为了尽可能的简化混叠数据同时插值分离问题，我们提出了一种自监督的训练方法，能够在不对数据做提前分析以及网络模型做调整的情况下相对高质量的完成任务，并且使用了一套模拟数据和一套实际数据来进行实验，验证了我们的结果。
+
+\end{abstract}
+
+\section{Introduction}
+The key of simultaneous source seismic exploration technology lies in artificially shortening the source excitation interval, causing seismic records to overlap and thereby increasing acquisition efficiency. When combined with compressed sensing theory for irregularly deployed receivers at the recording end, the acquisition cost of seismic exploration can be further reduced. 
+For the constraints in simultaneous interpolation and separation processing, traditional signal analysis theories, such as compressed sensing, often rely on the coherence differences between useful signals and interference \cite[]{zhouSimultaneousDeblendingInterpolation2018}. Beyond these physical principles, data-driven deep learning methods can non-linearly map inputs to desired outputs. To eliminate the dependence on labeled data, unsupervised training methods can be employed. However, unsupervised approaches often require complex modifications to network models, such as mask networks \cite[]{wangSelfsupervisedSimultaneousDeblending2024} and diffusion models \cite[]{sen2019}. 
+
+To further simplify the operation of unsupervised training, we have integrated the separation and interpolation tasks to develop a self-supervised training method for simultaneous interpolation and separation. This method offers faster training speeds compared to generative self-supervised training and better generalization than supervised training, enabling it to simultaneously accomplish interpolation and separation tasks. 
+\section*{Theory}
+
+\subsubsection{Deblending and Interpolation}
+
+Unlike noisy seismic data, blended data contains multiple source signals in a single record. The individual source signals in the data are coherent with each other. The blended data can be described by the following equation:
+\begin{equation}\label{eq:dp=td}
+\mathbf{d}_{n_{ble}}=\sum_{i=1}^{N}\Gamma_{n,i}\mathbf{d}_i
+\end{equation}
+where $\mathbf{d}_{n_{ble}}$is the blended data of the $n$\textit{th} source, $\mathbf{d}_i$ means the $i$\textit{th} clean seismic data. $\Gamma_{n,i}$ represents the $i$th source signal blended with $n$th source signal operate. On this basis, the missing trace can be represented by a sampling matrix. Rewrite equation~\ref{eq:dp=td} include the missing traces data:
+
+\begin{equation}
+\begin{array}{c}
+\mathbf{D}=\mathbf{F} \mathbf{R}  \mathbf{m}
+\label{eq:D=Tm_mx}
+\end{array}
+\end{equation}
+
+Here, $\mathbf{D}$ represents all sources' blended data: 
+$\left[
+    \begin{array}{c}
+        \mathbf{d}_{1_{ble}} ,
+        \dots           ,
+        \mathbf{d}_{n_{ble}}
+    \end{array}\right]^{T}$, 
+$\mathbf{m}$ represents all sources' clean data: $
+\left[
+    \begin{array}{c}
+        \mathbf{d}_1 ,
+        \dots        ,
+        \mathbf{d}_n
+    \end{array}
+    \right]^{T}$, 
+$\mathbf{R}$ represents the sampling matrix, $\mathbf{F}$ represents the blending operator matrix:
+\begin{equation}
+\renewcommand{\arraystretch}{0.8} % 调整行距，默认是1
+\setlength{\arraycolsep}{2pt} % 调整列间距，默认是5pt
+\mathbf{R}=
+\left[
+    \begin{array}{cccc}
+        \mathbf{r}_1         &\mathbf{0}  &\cdots      &\mathbf{0}      \\
+        \mathbf{0}        &\ddots        &\ddots     &\vdots           \\
+        \vdots             &\ddots       &\ddots      &\vdots           \\
+        \mathbf{0}        &\cdots       &\cdots      &\mathbf{r}_n
+    \end{array}\right] ;
+    \quad
+\mathbf{F}=
+\left[
+    \begin{array}{cccc}
+        \mathbf{I}         &\Gamma_{2,1} &\cdots      &\Gamma_{n,1}     \\
+        \Gamma_{1,2}       &\ddots        &\ddots     &\vdots           \\
+        \vdots             &\ddots       &\ddots      &\vdots           \\
+        \Gamma_{1,n}       &\cdots       &\cdots      &\mathbf{I}
+    \end{array}\right] 
+\end{equation}
+$\mathbf{r}_n$ marks the missing seismic traces in $\mathbf{d}_n$.
+Based on this formula, deriving $\mathbf{m}$ from $\mathbf{D}$ forms the core idea of the inversion-based separation iteration (Figure~\ref{fig:marmousi_hyper,marmousi_ble,marmousi_ble_and_loss}). As long as we can recover a portion of the valid signal from the pseudo-deblended \cite[]{mahdadSeparationBlendedData2011} records, we can use the blending formula to reverse-delay the valid signal back into the blend noise, subtract it from the pseudo-deblended records, and obtain cleaner pseudo-deblended records. This iterative process continues until the noise is completely suppressed.
+
+\setfigdir{../data_exam/Fig}
+\multiplot{3}{marmousi_hyper,marmousi_ble,marmousi_ble_and_loss}{width=0.14\textwidth}
+{Simultaneous acquisition: (a) Original record, (b) Blended record, (c) Blended and Missing traces record.}
+\subsubsection{Iterative Framework}
+
+The blended data in some domains (except common shot domain) contains source signals arranged in a continuous shape for the main source, while the other sources can be considered as random noise. However, the noise in the blended data is shifted by $\Gamma$, meaning the position of the noise in the pseudo-deblended record can be predicted. Based on this characteristic, \cite{mahdad2011} introduced a method called the estimation and subtraction algorithm. Regardless of the operation used to obtain a clean record, the recorded data can be shifted to simulate to the blending noise, which is then subtracted from the pseudo-separated record to initiate the next iterative process. This approach maximizes the protection of the active signal from degradation. The iterative method can be described as follows:
+\begin{equation}
+\mathbf{m}_{i+1} = \mathbf{S}(\mathbf{D}-(\mathbf{I}-\mathbf{F})\mathbf{R} \mathbf{m}_i)+(\mathbf{I}-\mathbf{R})\mathbf{m}_i)
+\end{equation}
+Here, $\mathbf{I}$ represents the identity matrix, $\mathbf{S}$ represents a coherence constraint operation, which is used to separate part of the clean signal $\mathbf{m}$ from the blended data $\mathbf{D}$, the $i$ means $i$\textit{th} iterative times. In the existing iterative deblending operation, $\mathbf{m}$ is seismic gather. This method is then applied to all seismic trace gathers to obtain a single seismic signal. However, this approach faces challenges when the differences between the primary and secondary sources are too small in certain regions of the data domain, as the coherence constraint $\mathbf{S}$ struggles to effectively separate the blended data. 
+
+\subsubsection{Self-supervised training}
+%上述迭代框架中的关键是约束算子S的构建，S需要同时完成混叠噪声压制与缺失地震道重建的功能。采用深度学习的方法来设计约束算子，相较于使用压缩感知理论的稀疏约束、低秩约束等物理驱动方法更加的快捷，对于数据的结构，我们设计了如下的混叠损失函数。
+The key to the aforementioned iterative framework lies in the construction of the constraint operator $\mathbf{S}$, which must simultaneously achieve the functions of suppressing blend noise and reconstructing missing seismic traces. Designing the constraint operator using deep learning methods is significantly faster compared to physics-driven approaches such as sparse constraints or low-rank constraints based on compressive sensing theory. To address the structure of the data, we have designed the following blending loss function.
+%缺失恢复损的约束，我们通过重采样人为设置新的确实地震道R_m，R_m和原始缺失地震道R不重合，将重采样后的数据输入网络得到输出，输出和原始输入的初始非缺失部位进行损失函数计算，即使用原始数据中的非缺失部位作为训练集训练，损失函数可写为如下格式：
+For the constraint of missing data recovery, we artificially create new mask matrix $\mathbf{R_m}$ through resampling, ensuring that 
+$\mathbf{R_m}$ does not overlap with the original sampling matrix $\mathbf{R}$. The resampled data is then fed into the network, and the output is compared with the original input's initially non-missing portions to compute the loss function. In other words, the non-missing portions of the original data are used as the training set. The loss function can be expressed in the following form:
+\begin{equation}
+\text{}{L}_{i}(\mathbf{X},\mathbf{\theta})= \Vert (\mathbf{R}\mathcal{F}(\mathbf{R_m} \mathbf{X},\mathbf{\theta}) - \mathbf{X})\Vert^{2}
+\end{equation}
+Here, $\mathbf{X}$ represents the input data to the network, which is the data to be processed containing both blending noise and missing traces. $\mathcal{F}(\mathbf{X},\mathbf{\theta})$ means using parameters $\mathbf{\theta}$ to predict clean data from $\mathbf{X}$, For the deblending task, we design the constraint based on the forward blending formula. The output of the network is treated as the clean data, which is then re-blended and compared with the input data to compute the loss function. This approach enables self-supervised training. The loss function can be expressed in the following format:
+\begin{equation}
+\text{}{L}_{d}(\mathbf{X},\mathbf{\theta})= \Vert \mathbf{F} \mathcal{F}(\mathbf{X},\mathbf{\theta}) - \mathbf{X}\Vert^{2}
+\end{equation}
+Combining the two constraints mentioned above, the final loss function is as follows:
+\begin{equation}\label{lossf}
+\text{}{L}(\mathbf{X},\mathbf{\theta})= \Vert \mathbf{F}\mathbf{R}\mathcal{F}(\mathbf{R_m}\mathbf{X},\mathbf{\theta}) - \mathbf{X}\Vert^{2}
+\end{equation}
+
+\subsection{Iterative training}
+To maximize the network's suppression of strong interference, we integrate the iterative framework into the training process. When the number of training epochs exceeds half, based on the change in the loss value, we save the network's output data whenever the loss value decreases. We then process the input using the formula to obtain a new input $\mathbf{X}_{i+1}$. Compared to the result of the previous iteration $\mathbf{x}_{i}$, the missing traces in $\mathbf{X}_{i+1}$ will be partially recovered, while the blend noise will be suppressed. This reduces the interference in the input data, making it easier for the network to learn the effective components in the data, thus improving the accuracy of the output. This process can be expressed as:
+\begin{equation}\label{iter}
+\mathbf{X}_{i+1} = \mathcal{F}(\mathbf{D}-(\mathbf{I}-\mathbf{F})\mathbf{R}\mathbf{X}_{i}+(\mathbf{I}-\mathbf{R})\mathbf{X}_{i},\theta)
+\end{equation}
+Since the network training iteration does not always decrease along the optimal direction, when updating the input, the data update is also determined based on the loss value. If the loss increases, further iterations (Equation~\ref{iter}) are halted.
+
+\section{Examples}
+We separately performed interpolation and separation for the proposed method to analyze the effect of each task, and then conducted simultaneous interpolation and separation for testing. The data used in the experiment were forward-modeled from the Marmousi velocity model, consisting of seismic records with a sampling interval of 4 ms, a recording duration of 2 s, and containing 200 traces (Figure~\ref{fig:marmousi_hyper,marmousi_ble,marmousi_ble_and_loss}). 
+For the interpolation task, we introduced 30\% random trace missing, resulting in the outcome illustrated in Figure\ref{fig:inter_marmousi_loss}. The results of interpolation are shown in Figure~\ref{fig:inter_marmousi_interps_1}, where the self-supervised training interpolation results achieve a remarkably high level of accuracy (Figure~\ref{fig:inter_marmousi_error}).
+\setfigdir{../need_analyse/Fig}
+\multiplot{3}{inter_marmousi_loss,inter_marmousi_interps_1,inter_marmousi_error}{width=0.14\textwidth}
+{Interpolation results for Marmousi data:
+(a) Missing trace data,
+(b) Interpolation result,
+(c) Processing error.}
+
+For the generation of blended data, we used one source record to generate the blended data. The firing time delay sequence for 2\textit{nd} source was randomly distributed between 0.5 s and 1 s. The corresponding blended data is shown in Figure~\ref{fig:deb_marmousi_ble}, which is applied to test the deblending performance of the proposed network.
+The results obtained from the deblending task are slightly worse (Figure~\ref{fig:deb_marmousi_deble}). The reason is that, the constraints of the loss function alone, it is difficult for the network to fully learn the most critical separation information. However, the suppression of blend noise remains effective within a considerable range, successfully handling most of the blend noise (Figure~\ref{fig:deb_marmousi_error_deb}).
+\setfigdir{../need_analyse_deb/Fig}
+\multiplot{3}{deb_marmousi_ble,deb_marmousi_deble,deb_marmousi_error_deb}{width=0.14\textwidth}
+{Deblending results for Marmousi data:
+(a) Blended data,
+(b) Deblending result,
+(c) Processing error.}
+
+Building upon the previous steps, we simultaneously perform interpolation and separation training using the integrated loss function (Equation~\ref{lossf}) and the iterative formula (Equation~\ref{iter}). The data containing blending noise and missing traces is shown in Figure~\ref{fig:marmousi_ble_and_loss}. The results of the self-supervised training for separation are shown in Figure \ref{fig:marmousi_deb_dai}.
+\setfigdir{../need_analyse_d_and_i/marmousi/Fig}
+\multiplot{2}{marmousi_deb_dai,marmousi_deb_error_dai,marmousi_deb_cur_dai,marmousi_deb_error_cur_dai}{width=0.19\textwidth}
+{Simultaneous interpolation and separation results for Marmousi data, processing by the proposed method: (a) reconstruction result,
+(b) processing error, curvelet ISTA method: (c) reconstruction result,
+(d) processing error.}
+
+From the error shown in Figure~\ref{fig:marmousi_deb_error_dai}, it can be observed that the proposed method achieves satisfactory results for both standalone interpolation and deblending tasks, while also demonstrating excellent performance in the simultaneous interpolation and separation task. In the Figure~\ref{fig:marmousi_deb_cur_dai} and \ref{fig:marmousi_deb_error_cur_dai}, we present the processing results of the curvelet iterative shrinkage thresholding algorithm (ISTA). It can be observed that while the curvelet ISTA effectively suppresses weak noise in the central region of the signal, it struggles with strong noise residuals, especially near the image boundaries. In contrast, the proposed method significantly reduces high-energy noise residuals at the boundaries.
+
+After obtaining satisfactory validation on the record generated from Marmousi model, we further tested the algorithm using the following real dataset (Figure~\ref{fig:bao9_hyper}). Similarly, the firing time delay was randomly distributed between 0.25 s and 0.5 s, and 30\% random trace missing was also introduced, resulting in the blended data shown in Figure~\ref{fig:bao9_ble_and_loss}.
+\setfigdir{../need_analyse_d_and_i/bao9/Fig}
+\multiplot{2}{bao9_hyper,bao9_ble_and_loss}{width=0.19\textwidth}
+{(a) The actual data,
+(b) Data after missing traces and blending}
+
+Figure~\ref{fig:bao9_deb,bao9_deb_error} shows our processing results, which are still relatively satisfactory. The method can perform separation and interpolation operations with relatively high quality. Additionally, compared to the Marmousi data, we further reduced the delay time discretization range, which is closer to the smaller delay time ranges that may occur in actual acquisition.
+
+
+\setfigdir{../need_analyse_d_and_i/bao9/Fig}
+\multiplot{2}{bao9_deb,bao9_deb_error}{width=0.19\textwidth}
+{(a) Processing result.
+(b) Processing errors.}
+
+The Figure~\ref{fig:snr} illustrates the loss value and SNR trends during the self-supervised training process. The red-marked indicate the starting positions of iterative training. It can be observed that after the iterative training begins, both the loss value and SNR have greatly improvement, indicating that the network further learns to suppress the residual blending noise in the data. 
+
+\setfigdir{../need_analyse_d_and_i/bao9/Fig}
+\plot{snr}{width=0.47\textwidth}
+{Trend of signal-to-noise (SNR) ratio (blue line) and loss value (black line) during the training process.}
+
+Additionally, the true amplitude of the 128\textit{th} trace (black line), the deblending result of the proposed method (red line) are shown in the Figure~\ref{fig:ots}. In the figure, the red line representing the proposed method is nearly invisible, indicating that for this lower-quality real dataset, the error in the single-trace comparison is minimal, effectively meeting the high-quality processing standards.
+
+\setfigdir{../need_analyse_d_and_i/bao9/Fig}
+\plot{ots}{width=0.47\textwidth}
+{Single-trace amplitude comparison of the 128\textit{th} trace.}
+
+The network training was conducted using two Quadro GP100 GPUs, the network used is based on a supervised training architecture, with no modifications made to adapt it specifically to the method proposed in this paper \cite[]{ke2024hybrid}. This fully demonstrates that our method does not rely on networks with exceptionally strong learning capabilities. Even on platforms with limited computational power, using simpler networks such as simple CNNs or U-Net can still achieve satisfactory processing results. The total training time was approximately 200 minutes, this approach requires significantly less time and can be adapted to various simple network architectures.
+
+
+\section{Conclusions}
+We proposed a self-supervised neural network to address interpolation and deblending simultaneously. By introducing a new loss function, the method enables self-supervised training while effectively performing accurate interpolation during the processing of blended data, ensuring high-fidelity reconstruction and providing a feasible solution for improving data quality in various practical application scenarios. Experimental results demonstrate that, compared to the generative networks, the proposed method enhances computational efficiency and broadens applicability. In the context of blended data separation, the proposed loss function does not achieve perfect results when dealing with lower-quality data. To address this, targeted network innovations, such as incorporating blind traces or masks to assist in self-supervised training, could be explored.
+
+\section{Acknowledgments}
+The project is funded by the National Natural Science Foundation of China (Grant No. 42374160) and  CNPC Innovation\\(2024DQ02-0139).
+
+% \onecolumn
+
+% \setfigdir{../need_analyse/Fig}
+% \multiplot{4}{marmousi_hyper,marmousi_loss,marmousi_interps_1,marmousi_error}{width=0.2\textwidth}
+% {Interpolation Results for Forward-Modeled Data from the Marmousi Velocity Model:
+% (a) Original record,
+% (b) Missing record,
+% (c) Interpolation result,
+% (d) Processing Error.}
+
+% \setfigdir{../need_analyse/Fig}
+% \multiplot{4}{bao9_hyper,bao9_loss,bao9_interps_1,bao9_error}{width=0.2\textwidth}
+% {Interpolation Results for Real Data:
+% (a) Original record,
+% (b) Missing record,
+% (c) Interpolation result,
+% (d) Processing Error.}
+
+
+
+%\append{The source of the bibliography}
+%\verbatiminput{example.bib}
+
+\onecolumn
+
+
+\bibliographystyle{seg}
+\bibliography{example}
+% \let\cleardoublepage\relax
+% \let\clearpage\relax
+\end{document}

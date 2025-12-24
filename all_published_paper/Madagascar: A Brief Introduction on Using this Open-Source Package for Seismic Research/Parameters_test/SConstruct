@@ -1,0 +1,151 @@
+from rsf.proj import *
+#  import sys, os, platform
+#  if 'macos' in platform.platform().lower():
+#      myprog_path='/Users/lzf/Documents/cdut_zsh_group/python/subfuctions'
+#  elif 'linux' in platform.platform().lower():
+#      myprog_path='/media/lzf/Work/code/python'
+#      myprog_path_survey='/home/lzf/code/python'
+#  else:
+#      myprog_path='L:\data\python'
+#  sys.path.append(myprog_path)
+#  sys.path.append(myprog_path_survey)
+#  from subfunctions import *
+#
+from rsf.proj import *
+###########################################################################################
+def result (data,other):
+    Result (data,
+             '''
+             grey title= label1='Time' unit1='s' label2='Trace' unit2=''
+             color=g screenratio=1.5 clip=%f wanttitle=n bar=y scalebar=n labelfat=4
+             '''%(other))
+def resultl (data,other):
+    Result (data,
+             '''
+             grey title= label1='Time' unit1='s' label2='Trace' unit2=''
+             color=g screenratio=%f wanttitle=n clip=5 bar=y scalebar=n labelfat=4 o1num=60 d1num=20 n1tic=8
+             '''%(other))
+def plot (data,other):
+    Plot (data,
+             '''
+             grey title= label1='Time' unit1='s' label2='Trace' unit2=''
+             color=g screenratio=%f wanttitle=n clip=5 bar=y scalebar=n labelfat=4 o1num=60 d1num=20 n1tic=8
+             '''%(other))
+def result3 (data, other):
+    Result (data,
+            '''
+            byte bar=bar.rsf  clip=%f | grey3 frame1=500 frame2=60 frame3=100 flat=n point1=0.85 point2=0.44 color=g wantaxis=y movie=0 scalebar=n title="" label1="Time" unitl="s" label2='CSG' label3="CRG"  labelfat=4
+            '''%(other))
+def result33 (data, other):
+    Result (data,
+            '''
+            byte bar=bar.rsf  clip=%f | grey3 frame1=500 frame2=60 frame3=100 flat=n point1=0.85 point2=0.44 color=g wantaxis=y movie=0 scalebar=n title="" label1="Time" unitl="s" label2='Trace' label3="Patch"  labelfat=4 screenratio=1.5
+            '''%(other))
+def result333 (data, other):
+    Result (data,
+            '''
+            byte bar=bar.rsf  clip=%f | grey3 frame1=500 frame2=60 frame3=10 flat=n point1=0.85 point2=0.44 color=g wantaxis=y movie=0 scalebar=n title="" label1="Time" unitl="s" label2='Trace' label3="Patch"  labelfat=4 screenratio=1.5
+            '''%(other))
+    
+def plot3 (data, other):
+     Plot (data,
+            '''
+            byte clip=3e+6 bar=bar.rsf %s| grey3 frame1=150 frame2=50 frame3=15
+            title='' label1='Time' unit1='s' label2='X' unit2='' label3='Y' unit3=''
+            flat=n wantaxis=y wanttitle=n color=g point1=0.85 point2=0.64 screenratio=1.5 o1num=0 d1num=2 n1tic=3 
+            '''%(other))
+def wig (data, other):
+    Result (data,
+            '''
+            wiggle title=%s transp=y yreverse=y label1='Time' unit1='s' label2='Trace' unit2=''
+            screenratio=1
+            %s
+            '''%(data, other))
+def graph (data, other):
+    Result (data,
+            '''
+            graph title=%s label1='Frequency' unit1='Hz' label2='Amplitude' unit2='' screenratio=0.5
+            %s
+            '''%(data, other))
+###########################################################################################
+datapath = '/media/lzf/Work/code/python/2022_work/deblending1_simple_block_best_all_python_lzf'
+n1=256
+n2=128
+window_left  = 50
+window_right = 100
+window_up    = 50
+window_down  = 100
+
+d1 = 0.004
+d2 = 1
+x1=window_left*d2
+x2=window_right*d2
+
+y1=window_up*d1
+y2=window_down*d1
+
+clip = 0.06
+Flow('frame.asc',None,'echo %s n1=10 data_format=ascii_float in=$TARGET'% \
+        " ".join(map(str,(x1,y1,x2,y1,x2,y2,x1,y2,x1,y1))))
+Plot('frame','frame.asc',
+        '''
+        dd type=complex form=native |
+        graph min1=0 max1=%lf min2=0 max2=%lf  pad=n plotfat=5 plotcol=6
+        wantaxis=n wanttitle=n yreverse=y scalebar=n screenratio=1.5
+        '''%(n2-1,(n1-1)*d1))
+for i in range (1,100,20):
+    csg = 'csg%d'%(i)
+    dither = 'dither%d'%(i)
+    window = 'window%d'%(i)
+    csg_window = 'csg_window%d'%(i)
+    dither_test = 'dither_test%d'%(i)
+    Flow (csg,f'{datapath}/dither_test/test_data1/obser_{i:02d}.dat','bin2rsf n1=256 n2=128')
+    Flow (dither,f'{datapath}/dither_test/test_data1/dither_{i:02d}.dat','bin2rsf n1=128 d1=1 n2=1')
+    # Flow (deb,f'{datapath}/dither_test/test_data1/data_test/output/obser_{i:02d}.dat','bin2rsf n1=256 n2=128')
+    Result (dither,
+            '''
+            graph title= label1='Time' unit1='s' label2='Trace' unit2=''
+            screenratio=1.5 wanttitle=n wantaxis=n max2=64 min2=-64 min1=1 max1=128 plotfat=8
+            ''')
+    Result (csg,
+             '''
+             grey title= label1='Time' unit1='s' label2='Trace' unit2=''
+             color=g screenratio=1.5 clip=%f wanttitle=n bar=y scalebar=n labelfat=4
+             '''%(clip))
+    Result (dither_test, 'csg%d dither%d'%(i,i), 'Overlay')
+    Result(window,'csg%d frame'%(i),'Overlay')
+    Flow(csg_window,'csg%d '%(i),'window n1=%d f1=%d n2=%d f2=%d '%(window_down-window_up,window_up,window_right-window_left,window_left))
+    Result (csg_window,
+             '''
+             grey title= label1='Time' unit1='s' label2='Trace' unit2=''
+             color=g screenratio=1 clip=%f wanttitle=n bar=y scalebar=n labelfat=4
+             '''%(clip))
+
+# clip = 0.06
+# for i in [3,6]:
+
+
+x1=window_left*d2
+x2=window_right*d2
+
+y1=window_up*d1
+y2=window_down*d1
+
+# x=0
+# y=0.75
+# w=240
+# h=0.5
+
+
+
+Flow ('abs_test_3',f'{datapath}/Abs_test/test_data1/output/deblended1_{3:02d}.dat','bin2rsf n1=256 n2=128')
+result('abs_test_3',clip)
+Flow ('abs_test_10',f'{datapath}/Abs_test/test_data1/output/deblended1_{6:02d}.dat','bin2rsf n1=256 n2=128')
+result('abs_test_10',clip)
+
+Flow ('abs_obser',f'{datapath}/Abs_test/test_data1/obser.dat','bin2rsf n1=256 n2=128')
+Flow ('abs_hybird',f'{datapath}/Abs_test/test_data1/hyper.dat','bin2rsf n1=256 n2=128')
+result('abs_obser',clip)
+result('abs_hybird',clip)
+
+End ()

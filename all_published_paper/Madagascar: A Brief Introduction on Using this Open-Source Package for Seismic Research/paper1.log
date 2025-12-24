@@ -1,0 +1,628 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2024.9.15)  16 DEC 2025 15:54
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**paper1.ltx
+(./paper1.ltx
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-01-22>
+(./segabs.cls
+Document Class: segabs 2005/04/03 v1.0 SEG expanded abstract
+(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2022/04/13 v1.1d Standard LaTeX ifthen package (DPC)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2023/05/17 v1.4n Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/size11.clo
+File: size11.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count187
+\c@section=\count188
+\c@subsection=\count189
+\c@subsubsection=\count190
+\c@paragraph=\count191
+\c@subparagraph=\count192
+\c@figure=\count193
+\c@table=\count194
+\abovecaptionskip=\skip48
+\belowcaptionskip=\skip49
+\bibindent=\dimen140
+)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/mathptmx.sty
+Package: mathptmx 2020/03/25 PSNFSS-v9.3 Times w/ Math, improved (SPQR, WaS) 
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 28.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> OT1/ztmcm/m/n on input line 28.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ztmcm/m/n on input line 28.
+LaTeX Font Info:    Redeclaring symbol font `letters' on input line 29.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> OML/ztmcm/m/it on input line 29.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> OML/ztmcm/m/it on input line 29.
+LaTeX Font Info:    Redeclaring symbol font `symbols' on input line 30.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> OMS/ztmcm/m/n on input line 30.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> OMS/ztmcm/m/n on input line 30.
+LaTeX Font Info:    Redeclaring symbol font `largesymbols' on input line 31.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/ztmcm/m/n on input line 31.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/ztmcm/m/n on input line 31.
+\symbold=\mathgroup4
+\symitalic=\mathgroup5
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 34.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 34.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 34.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 35.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> OT1/ptm/m/it on input line 35.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> OT1/ptm/m/it on input line 35.
+LaTeX Info: Redefining \hbar on input line 50.
+)
+LaTeX Font Info:    Redeclaring symbol font `largesymbols' on input line 48.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/ztmcm/m/n --> OMX/cmex/m/n on input line 48.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/ztmcm/m/n --> OMX/cmex/m/n on input line 48.
+ (./seg.sty
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/ifpdf.sty
+Package: ifpdf 2019/10/25 v3.4 ifpdf legacy package. Use iftex instead.
+
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2022/02/03 v1.0f TeX engine tests
+))
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
+\KV@toks@=\toks17
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2022/03/10 v1.4e Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 107.
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2022/09/22 v1.2b Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen141
+\Gin@req@width=\dimen142
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/verbatim.sty
+Package: verbatim 2023-11-06 v1.5v LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks18
+\verbatim@line=\toks19
+\verbatim@in@stream=\read2
+)
+(/usr/share/texlive/texmf-dist/tex/latex/moreverb/moreverb.sty
+Package: moreverb 2008/06/03 v2.3a `more' verbatim facilities
+\tab@position=\count195
+\tab@size=\count196
+\listing@line=\count197
+))
+\c@@plots=\count198
+
+(/usr/share/texlive/texmf-dist/tex/latex/subfig/subfig.sty
+Package: subfig 2005/06/28 ver: 1.3 subfig package
+
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2023/08/05 v3.6o Customizing captions (AR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
+\caption@tempdima=\dimen143
+\captionmargin=\dimen144
+\caption@leftmargin=\dimen145
+\caption@rightmargin=\dimen146
+\caption@width=\dimen147
+\caption@indent=\dimen148
+\caption@parindent=\dimen149
+\caption@hangindent=\dimen150
+Package caption Info: Standard document class detected.
+)
+\c@caption@flags=\count199
+\c@continuedfloat=\count266
+)
+\c@KVtest=\count267
+\sf@farskip=\skip50
+\sf@captopadj=\dimen151
+\sf@capskip=\skip51
+\sf@nearskip=\skip52
+\c@subfigure=\count268
+\c@subfigure@save=\count269
+\c@lofdepth=\count270
+\c@subtable=\count271
+\c@subtable@save=\count272
+\c@lotdepth=\count273
+\sf@top=\skip53
+\sf@bottom=\skip54
+)
+\c@sub@fig=\count274
+
+(/usr/share/texlive/texmf-dist/tex/latex/natbib/natbib.sty
+Package: natbib 2010/09/13 8.31b (PWD, AO)
+\bibhang=\skip55
+\bibsep=\skip56
+LaTeX Info: Redefining \cite on input line 694.
+\c@NAT@ctr=\count275
+)
+LaTeX Info: Redefining \refname on input line 137.
+\c@@append=\count276
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count277
+\lst@gtempboxa=\box51
+\lst@token=\toks20
+\lst@length=\count278
+\lst@currlwidth=\dimen152
+\lst@column=\count279
+\lst@pos=\count280
+\lst@lostspace=\dimen153
+\lst@width=\dimen154
+\lst@newlines=\count281
+\lst@lineno=\count282
+\lst@maxwidth=\dimen155
+
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2023/02/27 1.9 (Carsten Heinz)
+\c@lstnumber=\count283
+\lst@skipnumbers=\count284
+\lst@framebox=\box52
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2023/02/27 1.9 listings configuration
+))
+Package: listings 2023/02/27 1.9 (Carsten Heinz)
+
+(/usr/share/texlive/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
+Package: fancyvrb 2024/01/20 4.5c verbatim text (tvz,hv)
+\FV@CodeLineNo=\count285
+\FV@InFile=\read3
+\FV@TabBox=\box53
+\c@FancyVerbLine=\count286
+\FV@StepNumber=\count287
+\FV@OutFile=\write3
+)
+(/usr/share/texlive/texmf-dist/tex/latex/jknapltx/mathrsfs.sty
+Package: mathrsfs 1996/01/01 Math RSFS package v1.0 (jk)
+\symrsfs=\mathgroup6
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2023/05/13 v2.17o AMS math features
+\@mathmargin=\skip57
+
+For additional information on amsmath, use the `?' option.
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2021/08/26 v2.01 AMS text
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks21
+\ex@=\dimen156
+))
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen157
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2022/04/08 v2.04 operator names
+)
+\inf@bad=\count288
+LaTeX Info: Redefining \frac on input line 234.
+\uproot@=\count289
+\leftroot@=\count290
+LaTeX Info: Redefining \overline on input line 399.
+LaTeX Info: Redefining \colon on input line 410.
+\classnum@=\count291
+\DOTSCASE@=\count292
+LaTeX Info: Redefining \ldots on input line 496.
+LaTeX Info: Redefining \dots on input line 499.
+LaTeX Info: Redefining \cdots on input line 620.
+\Mathstrutbox@=\box54
+\strutbox@=\box55
+LaTeX Info: Redefining \big on input line 722.
+LaTeX Info: Redefining \Big on input line 723.
+LaTeX Info: Redefining \bigg on input line 724.
+LaTeX Info: Redefining \Bigg on input line 725.
+\big@size=\dimen158
+LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
+\macc@depth=\count293
+LaTeX Info: Redefining \bmod on input line 905.
+LaTeX Info: Redefining \pmod on input line 910.
+LaTeX Info: Redefining \smash on input line 940.
+LaTeX Info: Redefining \relbar on input line 970.
+LaTeX Info: Redefining \Relbar on input line 971.
+\c@MaxMatrixCols=\count294
+\dotsspace@=\muskip16
+\c@parentequation=\count295
+\dspbrk@lvl=\count296
+\tag@help=\toks22
+\row@=\count297
+\column@=\count298
+\maxfields@=\count299
+\andhelp@=\toks23
+\eqnshift@=\dimen159
+\alignsep@=\dimen160
+\tagshift@=\dimen161
+\tagwidth@=\dimen162
+\totwidth@=\dimen163
+\lineht@=\dimen164
+\@envbody=\toks24
+\multlinegap=\skip58
+\multlinetaggap=\skip59
+\mathdisplay@stack=\toks25
+LaTeX Info: Redefining \[ on input line 2953.
+LaTeX Info: Redefining \] on input line 2954.
+)
+LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 1
+2.
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ptm.fd
+File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count300
+\l__pdf_internal_box=\box56
+)
+
+LaTeX Warning: Unused global option(s):
+    [manuscript].
+
+(./paper1.aux)
+\openout1 = `paper1.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+
+(/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count301
+\scratchdimen=\dimen165
+\scratchbox=\box57
+\nofMPsegments=\count302
+\nofMParguments=\count303
+\everyMPshowfont=\toks26
+\MPscratchCnt=\count304
+\MPscratchDim=\dimen166
+\MPnumerator=\count305
+\makeMPintoPDFobject=\count306
+\everyMPtoPDFconversion=\toks27
+) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+
+(/usr/share/texlive/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/grfext/grfext.sty
+Package: grfext 2019/12/03 v1.3 Manage graphics extensions (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+))
+(/usr/share/texlive/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
+Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
+))
+(/usr/share/texlive/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.pdf,.png,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 504.
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: subfig package v1.3 is loaded.
+Package caption Info: listings package is loaded.
+Package caption Info: End \AtBeginDocument code.
+\c@lstlisting=\count307
+LaTeX Font Info:    Trying to load font information for OT1+ztmcm on input line
+ 40.
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ztmcm.fd
+File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
+)
+LaTeX Font Info:    Trying to load font information for OML+ztmcm on input line
+ 40.
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omlztmcm.fd
+File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
+)
+LaTeX Font Info:    Trying to load font information for OMS+ztmcm on input line
+ 40.
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsztmcm.fd
+File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
+)
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 40.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 40.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 40.
+LaTeX Font Info:    Trying to load font information for U+rsfs on input line 40
+.
+
+(/usr/share/texlive/texmf-dist/tex/latex/jknapltx/ursfs.fd
+File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
+)
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 4
+0.
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd
+File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
+)
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 54.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 54.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 54.
+
+
+pdfTeX warning: /usr/bin/pdflatex (file ./Other_Fig/Fig/tree.pdf): PDF inclusio
+n: found PDF version <1.7>, but at most version <1.5> allowed
+<Other_Fig/Fig/tree.pdf, id=1, 608.2725pt x 701.7417pt>
+File: Other_Fig/Fig/tree.pdf Graphic file (type pdf)
+<use Other_Fig/Fig/tree.pdf>
+Package pdftex.def Info: Other_Fig/Fig/tree.pdf  used on input line 60.
+(pdftex.def)             Requested size: 223.58531pt x 257.93784pt.
+
+Overfull \hbox (9.68369pt too wide) in paragraph at lines 54--61
+\OT1/ptm/m/n/9 The Mada-gas-car soft-ware pack-age cur-rently sup-ports only Li
+nux-
+ []
+
+
+Overfull \hbox (0.56633pt too wide) in paragraph at lines 64--65
+[]\OT1/ptm/m/n/9 Once in-stalled, users must add Mada-gas-car's en-vi-ron-ment 
+vari-
+ []
+
+[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf-
+dist/fonts/enc/dvips/base/8r.enc}
+
+
+ <./Other_Fig/Fig/tree.pdf>]
+<Fig/Fig/architecture.pdf, id=32, 558.85086pt x 350.24553pt>
+File: Fig/Fig/architecture.pdf Graphic file (type pdf)
+<use Fig/Fig/architecture.pdf>
+Package pdftex.def Info: Fig/Fig/architecture.pdf  used on input line 70.
+(pdftex.def)             Requested size: 178.86893pt x 112.10222pt.
+
+Overfull \hbox (1.69997pt too wide) in paragraph at lines 72--73
+\OT1/ptm/m/n/9 cally in Mada-gas-car's pro-pri-etary $\OML/ztmcm/m/it/9 :rsf$ \
+OT1/ptm/m/n/9 for-mat, which ef-fi-ciently
+ []
+
+
+Overfull \hbox (2.84338pt too wide) in paragraph at lines 90--110
+[]\OT1/ptm/m/n/9 By adopt-ing this data for-mat, the data pro-cess-ing logic in
+ Mada-
+ []
+
+<plot/Fig/single.pdf, id=33, 822.07124pt x 641.39626pt>
+File: plot/Fig/single.pdf Graphic file (type pdf)
+<use plot/Fig/single.pdf>
+Package pdftex.def Info: plot/Fig/single.pdf  used on input line 134.
+(pdftex.def)             Requested size: 178.86893pt x 139.55148pt.
+<plot/Fig/nearawiggle.pdf, id=34, 1079.03125pt x 677.53125pt>
+File: plot/Fig/nearawiggle.pdf Graphic file (type pdf)
+<use plot/Fig/nearawiggle.pdf>
+Package pdftex.def Info: plot/Fig/nearawiggle.pdf  used on input line 143.
+(pdftex.def)             Requested size: 93.94955pt x 58.99022pt.
+<plot/Fig/neara.pdf, id=35, 1187.43625pt x 656.4525pt>
+File: plot/Fig/neara.pdf Graphic file (type pdf)
+<use plot/Fig/neara.pdf>
+Package pdftex.def Info: plot/Fig/neara.pdf  used on input line 143.
+(pdftex.def)             Requested size: 93.94955pt x 51.9363pt.
+<plot/Fig/nearb.pdf, id=36, 1187.43625pt x 656.4525pt>
+File: plot/Fig/nearb.pdf Graphic file (type pdf)
+<use plot/Fig/nearb.pdf>
+Package pdftex.def Info: plot/Fig/nearb.pdf  used on input line 143.
+(pdftex.def)             Requested size: 93.94955pt x 51.9363pt.
+<plot/Fig/nearc.pdf, id=37, 1187.43625pt x 656.4525pt>
+File: plot/Fig/nearc.pdf Graphic file (type pdf)
+<use plot/Fig/nearc.pdf>
+Package pdftex.def Info: plot/Fig/nearc.pdf  used on input line 143.
+(pdftex.def)             Requested size: 93.94955pt x 51.9363pt.
+<plot/Fig/neare.pdf, id=38, 1187.43625pt x 656.4525pt>
+File: plot/Fig/neare.pdf Graphic file (type pdf)
+<use plot/Fig/neare.pdf>
+Package pdftex.def Info: plot/Fig/neare.pdf  used on input line 143.
+(pdftex.def)             Requested size: 93.94955pt x 51.9363pt.
+<plot/Fig/nearf.pdf, id=39, 1187.43625pt x 656.4525pt>
+File: plot/Fig/nearf.pdf Graphic file (type pdf)
+<use plot/Fig/nearf.pdf>
+Package pdftex.def Info: plot/Fig/nearf.pdf  used on input line 143.
+(pdftex.def)             Requested size: 93.94955pt x 51.9363pt.
+<plot/Fig/nearg.pdf, id=40, 1187.43625pt x 656.4525pt>
+File: plot/Fig/nearg.pdf Graphic file (type pdf)
+<use plot/Fig/nearg.pdf>
+Package pdftex.def Info: plot/Fig/nearg.pdf  used on input line 143.
+(pdftex.def)             Requested size: 93.94955pt x 51.9363pt.
+<plot/Fig/nearh.pdf, id=41, 1187.43625pt x 656.4525pt>
+File: plot/Fig/nearh.pdf Graphic file (type pdf)
+<use plot/Fig/nearh.pdf>
+Package pdftex.def Info: plot/Fig/nearh.pdf  used on input line 143.
+(pdftex.def)             Requested size: 93.94955pt x 51.9363pt.
+<plot/Fig/neari.pdf, id=42, 1187.43625pt x 656.4525pt>
+File: plot/Fig/neari.pdf Graphic file (type pdf)
+<use plot/Fig/neari.pdf>
+Package pdftex.def Info: plot/Fig/neari.pdf  used on input line 143.
+(pdftex.def)             Requested size: 93.94955pt x 51.9363pt.
+<plot/Fig/nearj.pdf, id=43, 1187.43625pt x 656.4525pt>
+File: plot/Fig/nearj.pdf Graphic file (type pdf)
+<use plot/Fig/nearj.pdf>
+Package pdftex.def Info: plot/Fig/nearj.pdf  used on input line 143.
+(pdftex.def)             Requested size: 93.94955pt x 51.9363pt.
+<plot/Fig/nearp.pdf, id=44, 1187.43625pt x 656.4525pt>
+File: plot/Fig/nearp.pdf Graphic file (type pdf)
+<use plot/Fig/nearp.pdf>
+Package pdftex.def Info: plot/Fig/nearp.pdf  used on input line 143.
+(pdftex.def)             Requested size: 93.94955pt x 51.9363pt.
+<plot/Fig/neart.pdf, id=45, 1187.43625pt x 656.4525pt>
+File: plot/Fig/neart.pdf Graphic file (type pdf)
+<use plot/Fig/neart.pdf>
+Package pdftex.def Info: plot/Fig/neart.pdf  used on input line 143.
+(pdftex.def)             Requested size: 93.94955pt x 51.9363pt.
+[2 <./Fig/Fig/architecture.pdf> <./plot/Fig/single.pdf>]
+<Parameters_test/Fig/csg41.pdf, id=61, 455.7025pt x 638.385pt>
+File: Parameters_test/Fig/csg41.pdf Graphic file (type pdf)
+<use Parameters_test/Fig/csg41.pdf>
+Package pdftex.def Info: Parameters_test/Fig/csg41.pdf  used on input line 149.
+
+(pdftex.def)             Requested size: 61.07043pt x 85.54509pt.
+<Parameters_test/Fig/window41.pdf, id=62, 455.7025pt x 638.385pt>
+File: Parameters_test/Fig/window41.pdf Graphic file (type pdf)
+<use Parameters_test/Fig/window41.pdf>
+Package pdftex.def Info: Parameters_test/Fig/window41.pdf  used on input line 1
+49.
+(pdftex.def)             Requested size: 61.07043pt x 85.54509pt.
+<Parameters_test/Fig/dither_test41.pdf, id=63, 455.7025pt x 638.385pt>
+File: Parameters_test/Fig/dither_test41.pdf Graphic file (type pdf)
+<use Parameters_test/Fig/dither_test41.pdf>
+Package pdftex.def Info: Parameters_test/Fig/dither_test41.pdf  used on input l
+ine 149.
+(pdftex.def)             Requested size: 61.07043pt x 85.54509pt.
+<Parameters_test/Fig/dither41.pdf, id=64, 385.44pt x 571.13374pt>
+File: Parameters_test/Fig/dither41.pdf Graphic file (type pdf)
+<use Parameters_test/Fig/dither41.pdf>
+Package pdftex.def Info: Parameters_test/Fig/dither41.pdf  used on input line 1
+49.
+(pdftex.def)             Requested size: 61.07043pt x 90.48564pt.
+<Parameters_test/Fig/csg_window41.pdf, id=65, 641.39626pt x 638.385pt>
+File: Parameters_test/Fig/csg_window41.pdf Graphic file (type pdf)
+<use Parameters_test/Fig/csg_window41.pdf>
+Package pdftex.def Info: Parameters_test/Fig/csg_window41.pdf  used on input li
+ne 149.
+(pdftex.def)             Requested size: 61.07043pt x 60.78357pt.
+<plot/Fig/3ddata.pdf, id=66, 476.78125pt x 661.47125pt>
+File: plot/Fig/3ddata.pdf Graphic file (type pdf)
+<use plot/Fig/3ddata.pdf>
+Package pdftex.def Info: plot/Fig/3ddata.pdf  used on input line 155.
+(pdftex.def)             Requested size: 79.85748pt x 110.78323pt.
+<plot/Fig/3ddata2.pdf, id=67, 481.8pt x 661.47125pt>
+File: plot/Fig/3ddata2.pdf Graphic file (type pdf)
+<use plot/Fig/3ddata2.pdf>
+Package pdftex.def Info: plot/Fig/3ddata2.pdf  used on input line 155.
+(pdftex.def)             Requested size: 79.85748pt x 109.63261pt.
+
+Overfull \hbox (20.53714pt too wide) in paragraph at lines 159--160
+\OT1/ptm/m/n/9 gas-car. By re-fer-ring to these doc-u-ments, users can cre-ate 
+$\OML/ztmcm/m/it/9 M\OT1/ztmcm/m/n/9 "\OML/ztmcm/m/it/9 name\OT1/ztmcm/m/n/9 "\
+OML/ztmcm/m/it/9 :c$
+ []
+
+
+
+pdfTeX warning: /usr/bin/pdflatex (file ./Other_Fig/Fig/lzfRSF.drawio.pdf): PDF
+ inclusion: found PDF version <1.7>, but at most version <1.5> allowed
+<Other_Fig/Fig/lzfRSF.drawio.pdf, id=68, 442.53331pt x 174.6525pt>
+File: Other_Fig/Fig/lzfRSF.drawio.pdf Graphic file (type pdf)
+<use Other_Fig/Fig/lzfRSF.drawio.pdf>
+Package pdftex.def Info: Other_Fig/Fig/lzfRSF.drawio.pdf  used on input line 16
+4.
+(pdftex.def)             Requested size: 223.58531pt x 88.24011pt.
+
+Overfull \hbox (18.09198pt too wide) in paragraph at lines 161--165
+\OT1/ptm/m/n/9 pi-la-tion, then nav-i-gate to $\OML/ztmcm/m/it/9 ::=::$ \OT1/pt
+m/m/n/9 un-der $\OML/ztmcm/m/it/9 RSFSRC$ \OT1/ptm/m/n/9 and run $\OML/ztmcm/m/
+it/9 sconsinstall \OMS/ztmcm/m/n/9 ^^@
+ []
+
+[3 <./plot/Fig/nearawiggle.pdf> <./plot/Fig/neara.pdf> <./plot/Fig/nearb.pdf> <
+./plot/Fig/nearc.pdf> <./plot/Fig/neare.pdf> <./plot/Fig/nearf.pdf> <./plot/Fig
+/nearg.pdf> <./plot/Fig/nearh.pdf> <./plot/Fig/neari.pdf> <./plot/Fig/nearj.pdf
+> <./plot/Fig/nearp.pdf> <./plot/Fig/neart.pdf> <./Parameters_test/Fig/csg41.pd
+f> <./Parameters_test/Fig/window41.pdf> <./Parameters_test/Fig/dither_test41.pd
+f> <./Parameters_test/Fig/dither41.pdf> <./Parameters_test/Fig/csg_window41.pdf
+> <./plot/Fig/3ddata.pdf> <./plot/Fig/3ddata2.pdf>]
+LaTeX Font Info:    Trying to load font information for OMS+cmtt on input line 
+181.
+LaTeX Font Info:    No file OMScmtt.fd. on input line 181.
+
+
+LaTeX Font Warning: Font shape `OMS/cmtt/m/n' undefined
+(Font)              using `OMS/cmsy/m/n' instead
+(Font)              for symbol `textbackslash' on input line 181.
+
+<./Other_Fig/Fig/flder.pdf, id=128, 480.67078pt x 207.39984pt>
+File: ./Other_Fig/Fig/flder.pdf Graphic file (type pdf)
+<use ./Other_Fig/Fig/flder.pdf>
+Package pdftex.def Info: ./Other_Fig/Fig/flder.pdf  used on input line 188.
+(pdftex.def)             Requested size: 216.87802pt x 93.57907pt.
+(./paper1.bbl) [4 <./Other_Fig/Fig/lzfRSF.drawio.pdf> <./Other_Fig/Fig/flder.pd
+f>] (./paper1.aux)
+ ***********
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-01-22>
+ ***********
+
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 7282 strings out of 474222
+ 119448 string characters out of 5748733
+ 2047975 words of memory out of 5000000
+ 29432 multiletter control sequences out of 15000+600000
+ 590895 words of font info for 103 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 87i,11n,93p,1370b,1076s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/
+utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on paper1.pdf (4 pages, 22138129 bytes).
+PDF statistics:
+ 196 PDF objects out of 1000 (max. 8388607)
+ 111 compressed objects within 2 object streams
+ 0 named destinations out of 1000 (max. 500000)
+ 121 words of extra memory for PDF output out of 10000 (max. 10000000)
+

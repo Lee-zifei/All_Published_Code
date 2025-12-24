@@ -1,0 +1,48 @@
+This is BibTeX, Version 0.99d (TeX Live 2023/Debian)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: paper1.aux
+The style file: seg.bst
+Database file #1: example.bib
+Warning--empty journal in zuberi
+You've used 1 entry,
+            2639 wiz_defined-function locations,
+            700 strings with 6153 characters,
+and the built_in function-call counts, 360 in all, are:
+= -- 33
+> -- 18
+< -- 0
++ -- 6
+- -- 6
+* -- 29
+:= -- 70
+add.period$ -- 1
+call.type$ -- 1
+change.case$ -- 8
+chr.to.int$ -- 1
+cite$ -- 2
+duplicate$ -- 13
+empty$ -- 22
+format.name$ -- 7
+if$ -- 66
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 1
+newline$ -- 8
+num.names$ -- 3
+pop$ -- 10
+preamble$ -- 2
+purify$ -- 8
+quote$ -- 0
+skip$ -- 10
+stack$ -- 0
+substring$ -- 12
+swap$ -- 0
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 6
+warning$ -- 1
+while$ -- 2
+width$ -- 0
+write$ -- 13
+(There was 1 warning)

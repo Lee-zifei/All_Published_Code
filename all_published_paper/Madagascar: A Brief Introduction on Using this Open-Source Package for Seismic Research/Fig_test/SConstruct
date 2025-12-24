@@ -1,0 +1,103 @@
+from rsf.proj import *
+#  import sys, os, platform
+#  if 'macos' in platform.platform().lower():
+#      myprog_path='/Users/lzf/Documents/cdut_zsh_group/python/subfuctions'
+#  elif 'linux' in platform.platform().lower():
+#      myprog_path='/media/lzf/Work/code/python'
+#      myprog_path_survey='/home/lzf/code/python'
+#  else:
+#      myprog_path='L:\data\python'
+#  sys.path.append(myprog_path)
+#  sys.path.append(myprog_path_survey)
+#  from subfunctions import *
+#
+from rsf.proj import *
+###########################################################################################
+def result (data,other):
+    Result (data,
+             '''
+             grey title= label1='Time' unit1='s' label2='Trace' unit2=''
+             color=g screenratio=1.5 clip=%f wanttitle=n bar=y scalebar=n labelfat=4
+             '''%(other))
+def resultl (data,other):
+    Result (data,
+             '''
+             grey title= label1='Time' unit1='s' label2='Trace' unit2=''
+             color=g screenratio=%f wanttitle=n bar=y scalebar=n labelfat=4 o1num=60 d1num=20 n1tic=8
+             '''%(other))
+
+def result_vel (data,other):
+    Result (data,
+             '''
+             grey title= label1='Time' unit1='s' label2='Trace' unit2=''
+             color=g screenratio=%f wanttitle=n clip=5 bar=y scalebar=n labelfat=4 o1num=60 d1num=20 n1tic=8
+             '''%(other))
+
+def plot (data,other):
+    Plot (data,
+             '''
+             grey title= label1='Time' unit1='s' label2='Trace' unit2=''
+             color=g screenratio=%f wanttitle=n clip=5 bar=y scalebar=n labelfat=4
+             '''%(other))
+def result3 (data, other):
+    Result (data,
+            '''
+            byte bar=bar.rsf  clip=%f | grey3 frame1=500 frame2=60 frame3=600 flat=n point1=0.85 point2=0.44 color=g wantaxis=y movie=0 scalebar=n title="" label1="Time" unitl="s" label2='CSG' label3="CCG" o3num=0 d3num=250 n3tic=4 labelfat=4
+            '''%(other))
+def plot3 (data, other):
+     Plot (data,
+            '''
+            byte clip=3e+6 bar=bar.rsf %s| grey3 frame1=150 frame2=50 frame3=15
+            title='' label1='Time' unit1='s' label2='X' unit2='' label3='Y' unit3=''
+            flat=n wantaxis=y wanttitle=n color=g point1=0.85 point2=0.64 screenratio=1.5 o1num=0 d1num=2 n1tic=3 
+            '''%(other))
+def wig (data, other):
+    Result (data,
+            '''
+            wiggle title=%s transp=y yreverse=y label1='Time' unit1='s' label2='Trace' unit2=''
+            screenratio=1
+            %s
+            '''%(data, other))
+def graph (data, other):
+    Result (data,
+            '''
+            graph title=%s label1='Frequency' unit1='Hz' label2='Amplitude' unit2='' screenratio=0.5
+            %s
+            '''%(data, other))
+def result_fk (data,other):
+    Result(data,
+        '''
+
+        grey clip=%g minval=0 maxval=1 title='' label1='Frequency' unit1='Hz' label2='Wavenumber'
+        scalebar=n color=j screenratio=1.5 labelfat=4 min1=0 max1=80 min2=-0.5 max2=0.5
+        '''%( other))
+###########################################################################################
+n1 = 4000
+n2 = 290
+n3 = 1
+bp_lo = 0
+bp_hi = 150
+
+clip = 8000
+fclip = 0.01
+
+i=70
+datapath = '/media/lzf/Work/code/python/2025_work/direct_image_and_inversion_make_target/'
+
+
+Flow ('hybird',[datapath+'dagang_deblending/testdata/d1.dat'],'bin2rsf n1=%d n2=%d| put n1=%d n2=%d n3=%d d1=0.001 d2=1 d3=1'%(n1,n2,n1,n2,n3))
+
+Flow ('hybird1','hybird','put n1=%d n2=%d n3=%d d1=0.001 d2=1 d3=1'%(n1,n2,n3))
+
+Flow ('hybird2','hybird1','window f1=0 n1=2000')
+
+Flow ('hybird3','hybird2','bandpass flo=10 fhi=100')
+
+Result ('hybird3',
+            '''
+            grey title= label1='Time' unit1='s' label2='Trace' unit2=''
+            color=g screenratio=1.5 clip=%f wanttitle=n bar=y scalebar=n labelfat=4
+            '''%(clip))
+
+
+End ()

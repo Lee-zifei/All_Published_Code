@@ -1,0 +1,218 @@
+
+
+% \usepackage{etoolbox}
+% \usepackage{natbib}
+% \usepackage{biblatex}
+% An example of defining macros
+
+
+
+\title{Madagascar: A Brief Introduction on Using this Open-Source Package for Seismic Research}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}} 
+
+\author{
+Zifei Li\footnotemark[2]\footnotemark[1],
+Shaohuan Zu\footnotemark[2],
+and 
+Yanxin Hu\footnotemark[2]
+\\
+\footnotemark[2]Chengdu University of Technology, Chengdu, China
+}
+% \author{rua!}
+
+% \footer{Example}
+% \lefthead{Dellinger \& Fomel}
+\righthead{Madagascar: A Brief Introduction on Using this Open-Source Package for Seismic Research}
+
+\maketitle
+
+\begin{abstract}
+%Madagascar是一款开源软件包，用于多维度地学数据分析和可重复计算实验。其核心特点是一个方便且强大的环境和便捷的技术转移工具。面向从事地球物理及相关领域数字图像和数据处理的研究人员。使用马达加斯加项目管理系统开发的技术以记录的处理历史形式传输，这些历史成为用户可验证、交换和修改的“计算配方”。在Madagascar的帮助下，研究人员可以轻松地共享和复现复杂的数据处理工作流程，对一些未知研究方向领域快速的找到工业级的软件算法。此外，Madagascar包含了强大的API接口以及绘图工具，并且能快速地书写科研文章。本文简要介绍Madagascar软件包的基本功能和使用方法，包括应用、绘图、数据处理、文章撰写以及开发自己的程序模块。
+Madagascar is an open-source software package designed for multidimensional geoscientific data analysis and reproducible computational experiments. Its core features include a user-friendly yet powerful environment and efficient technology transfer tools, targeting researchers engaged in digital image and data processing in geophysics and related fields. Technologies developed using the Madagascar project management system are documented as processing histories, which serve as verifiable, exchangeable, and modifiable "computational recipes." With Madagascar, researchers can easily share and reproduce complex data processing workflows, enabling rapid access to industrial-grade software algorithms for exploring unknown research areas. Additionally, Madagascar offers robust API interfaces and plotting tools, facilitating efficient scientific writing. This paper briefly introduces the basic functionalities and usage of the Madagascar software package, covering its applications in plotting, data processing, article writing, and developing custom program modules.
+
+\end{abstract}
+
+\section{Motivation and significance}
+%地震勘探领域涉及到对大量地震数据的复杂处理，其中每种处理都包含了复杂且繁多的研究方向。在对这些数据处理的过程中，无论是刚接触该领域的初学者，还是有多年经验的专家，在面临跨方向的研究以及分析工作时，都会遇到各种各样的困难。Madagascar软件包作为一个开源的地球物理数据处理平台，旨在为地震数据处理领域的研究人员提供一个便捷、高效的工具，以应对复杂的数据处理任务，其包含了过去几十年来各个领域地开源代码，并且这些开源代码的效果以及规范程度都能达到工业级的标准。通过Madagascar，研究人员可以轻松地共享和复现复杂的数据处理工作流程，从而促进了地震数据处理领域的协作与创新。此外，Madagascar还提供了强大的API接口和绘图工具，使得科研人员能够高效地进行数据分析和可视化展示。在这样的背景下，本文将简要介绍Madagascar软件包的基本功能和使用方法，帮助各位学者更好地理解和应用这一强大的工具来进行入门或者与跨领域的研究。
+The field of seismic exploration involves complex processing of large volumes of seismic data, with each processing step encompassing numerous and intricate research directions. During data processing, both beginners entering the field and experienced experts face various challenges when conducting cross-disciplinary research and analysis. The Madagascar software package, as an open-source platform for geophysical data processing, aims to provide researchers in seismic data processing with a convenient and efficient tool to tackle complex data processing tasks. It integrates open-source codes from various domains developed over the past decades, all of which meet industrial standards in terms of performance and specification. Through Madagascar, researchers can easily share and reproduce complex data processing workflows, thereby fostering collaboration and innovation in the field of seismic data processing. Additionally, Madagascar offers powerful API interfaces and plotting tools, enabling researchers to efficiently perform data analysis and visualization. Against this backdrop, this article provides a concise introduction to the basic functionalities and usage of the Madagascar software package, aiming to help scholars better understand and utilize this powerful tool for entry-level or cross-disciplinary research.
+
+\section*{Software description}
+
+\subsection{Software Installation and Architecture}
+\subsubsection{Installation}
+%Madagascar软件包目前仅支持在linux系统（如Ubuntu和centOS）上运行。用户可以通过从Madagascar的官方网站（https://www.ahay.org）下载最新版本的源代码。源代码的安装包为名叫RSFSRC的文件夹。文件夹既是安装包，同时也包含了所有开源代码并且应用实例脚本。其格式如图所示
+The Madagascar software package currently supports only Linux-based systems (such as Ubuntu and CentOS). Users can download the latest version of the source code from the official Madagascar website (https://www.ahay.org). The source code installation package is a folder named $RSFSRC$. This folder serves both as the installation package and contains all the open-source code along with example application scripts. Its structure is illustrated in the Figure~\ref{fig:tree}.
+\inputdir{Other_Fig}
+\plot{tree}{width=1\columnwidth}
+{The RSFSRC folder includes the $Book$ subdirectory, which contains all open-source user-written scripts, and the $User$ subdirectory, which houses the source code for all Madagascar program modules.}
+
+The installation of Madagascar requires two primary prerequisites: a C compiler and a Python interpreter. Similar to installing other Linux software, the process begins by navigating to the RSFSRC directory and executing the ./configure command to set up the installation environment. Next, run the make command to compile the source code, followed by make install to complete the installation.
+
+Once installed, users must add Madagascar’s environment variable path to the *shrc file (such as .bashrc or .zshrc) in the Linux system. This ensures that Madagascar’s package functions can be invoked from any directory. For detailed installation instructions, please refer to the official Madagascar installation guide on its website. After installation is complete, users can verify whether Madagascar has been successfully installed by entering the $sfin$ command in the terminal. If the installation was successful, the terminal will display the help information for the $sfin$ function, including available commands and options.
+
+\subsubsection{Architecture}
+Similar to other seismic data processing software, the Madagascar package is composed of fixed modular program units. Each module is named with the prefix $sf$ and follows fixed input and output formats. These program units can be invoked via the command line or compiled and executed within SConstruct scripts. Each program unit implements specific data processing functions, such as data reading, data transformation, filtering, and imaging. Users can select and combine appropriate program units according to their needs to accomplish complex data processing tasks. The software architecture of Madagascar is illustrated in the accompanying figure.
+\inputdir{Fig}
+\plot{architecture}{width=.8\columnwidth}
+{Level I is primarily completed during the installation of Madagascar. During this process, most programs at Level I are compiled, linked, and placed under $RSFROOT/bin$.Level II is mainly responsible for using SConstruct files to call Level I commands for data processing. The four basic commands in SConstruct are defined in $RSFROOT/lib/python2.7/dist-packages/rsf/proj.py$ (Python syntax can also be used here).}
+
+The input and output formats of the $sf$ program units are typically in Madagascar's proprietary $.rsf$ format, which efficiently stores and processes multidimensional seismic data. In the directory where the $sf$ module is executed, all output files do not contain the actual data but rather the metadata, such as data dimensions, sampling intervals, data types, and storage locations. The actual data body is stored in the path specified during the installation of Madagascar. In this path, the actual data body is saved as a binary file with the extension $.rsf@$, which can be directly read using pointers in other programming languages. An example of a $.rsf$ file is shown below:
+\begin{verbatim}
+4.2-git	sfmath	
+    x2=1
+    d2=1
+    n2=40
+    o1=0
+    o2=5
+    data_format="native_float"
+    esize=4
+    in="stdout"
+    x1=0
+    d1=0.01
+    n1=629
+    in="stdin"
+\end{verbatim}
+
+%通过这样的数据格式，Madagascar的数据处理逻辑得以简化。用户只需关注数据的处理流程，而无需担心数据的存储和读取细节。一个简单的例子如表~\ref{scons}所示，展示了如何使用Madagascar进行一个简单的数据处理任务。
+By adopting this data format, the data processing logic in Madagascar is significantly simplified. Users can focus on designing the data processing workflow without needing to concern themselves with the details of data storage and reading. A simple example, shown in follow, demonstrates how to perform a basic data processing task using Madagascar.
+% \onecolumn
+% \begin{figure*}[htb]
+% \begin{Verbatim}[frame=single]
+%     from rsf.proj import *
+%     datapath = '//'
+%     Flow ('hybird',[datapath+'d1.dat'],'bin2rsf n1=%d n2=%d'%(n1,n2))
+%     Flow ('hybird1','hybird','put n1=%d n2=%d n3=%d'%(n1,n2,n3))
+%     Flow ('hybird2','hybird1','window f1=0 n1=2000')
+%     Flow ('hybird3','hybird2','bandpass flo=10 fhi=100')
+%     Result ('hybird3',
+%                 '''
+%                 grey title= label1='Time' unit1='s' label2='Trace' unit2=''
+%                 color=g screenratio=1.5 clip=%f wanttitle=n bar=y scalebar=n labelfat=4
+%                 '''%(clip))
+%     End ()
+% \end{Verbatim}
+% \caption{SCons build system parameters. First, read the data from d1.dat using sfbin2rsf to generate $hybrid.rsf$. Then, use sfput to set the data dimension information and generate $hybrid1.rsf$. Next, use sfwindow to slice the first dimension to 0:2000 and generate $hybrid2.rsf$. After that, apply a high-pass filter of 10~100Hz using sfbandpass to obtain $hybrid3.rsf$. Finally, use sfgrey in Result to plot and display the result.}
+% \label{scons}
+% \end{figure*}
+
+
+\begin{lstlisting}[frame=single, breaklines=true, basicstyle=\ttfamily\small]
+    from rsf.proj import *
+    datapath = '//'
+    Flow ('hybird',[datapath+'d1.dat'],'bin2rsf n1=%d n2=%d'%(n1,n2))
+    Flow ('hybird1','hybird','put n1=%d n2=%d n3=%d'%(n1,n2,n3))
+    Flow ('hybird2','hybird1','window f1=0 n1=2000')
+    Flow ('hybird3','hybird2','bandpass flo=10 fhi=100')
+    Result ('hybird3',
+                '''
+                grey title= label1='Time' unit1='s' label2='Trace' unit2=''
+                color=g screenratio=1.5 clip=%f wanttitle=n bar=y scalebar=n labelfat=4
+                '''%(clip))
+    End ()
+\end{lstlisting}
+
+\subsection{Software functionality}
+\subsubsection{Displaying the data}
+%Madagascar软件提供了最强大的地学数据绘图程序，方便用户对数据进行分析和展示。常用的绘图命令包括sfgrey、sfwigb、sfimage等。这些命令可以生成不同类型的图像，如灰度图、波形图和二维图像等。用户可以根据需要选择合适的绘图命令，并通过设置参数来调整图像的显示效果。不同于其他绘图软件，Madagascar的绘图命令相当适用于地学数据的特点，用户不需要进行复杂的格式设置以及位置调整，只需要确保自己的数据格式正确即可。一维绘图的例子如图~\ref{fig:1dplot}所示，其中大部分参数如线条颜色、粗细、横纵坐标轴都是自动设置成标准格式，用户也可以自行增加对应的参数修改。
+The Madagascar software provides the most powerful geoscientific data plotting programs, facilitating data analysis and visualization for users. Commonly used plotting commands include $sfgrey$, $sfwigb$, $sfgraph$, and others. These commands can generate different types of images, such as grayscale plots, waveform plots, and 2D images. Users can select appropriate plotting commands based on their needs and adjust the display effects by setting parameters. Unlike other plotting software, Madagascar's plotting commands are well-suited to the characteristics of geoscientific data. Users do not need to perform complex formatting or layout adjustments—they only need to ensure their data is in the correct format. An example of 1D plotting is shown in Figure~\ref{fig:single}, where most parameters, such as line color, thickness, and axis labels, are automatically set to standard formats. Users can also modify these parameters by adding corresponding options as needed.
+\inputdir{plot}
+\plot{single}{width=.8\columnwidth}
+{The corresponding plotting code is:Flow ('single', 'hyper1', 'window f2=128 n2=1')
+Result ('single', 'graph wanttitle=n label2="Amplitude" unit2=""').}
+
+%二维绘图的例子如图~\ref{fig:hyperwiggle,neara,nearb,nearc,neare,nearf,nearg,nearh,neari,nearj,nearp,neart}所示。其中~\ref{fig:hyperwiggle}为波形图，~\ref{fig:neara,nearb,nearc,neare,nearf,nearg,nearh,neari,nearj,nearp,neart}为灰度图。用户可以通过调整参数来改变图像的显示效果，例如颜色、比例尺、标题等。Madagascar的绘图命令不仅功能强大，而且易于使用，使得用户能够高效地进行数据可视化展示。
+Examples of 2D plotting are shown in Figure~\ref{fig:nearawiggle,neara,nearb,nearc,neare,nearf,nearg,nearh,neari,nearj,nearp,neart}. Specifically, Figure~\ref{fig:nearawiggle} displays a wiggle plot, while Figures
+~\ref{fig:neara}~\ref{fig:nearb}~\ref{fig:nearc}~\ref{fig:neare}
+~\ref{fig:nearf}~\ref{fig:nearg}~\ref{fig:nearh}~\ref{fig:neari}
+~\ref{fig:nearj}~\ref{fig:nearp}~\ref{fig:neart} present grayscale plots. Users can adjust parameters such as color schemes, scale bars, and titles to modify the visual representation. The plotting commands in Madagascar are not only powerful but also user-friendly, enabling efficient and effective data visualization.
+\inputdir{plot}
+\multiplot{4}{nearawiggle,neara,nearb,nearc,neare,nearf,nearg,nearh,neari,nearj,nearp,neart}{width=0.2\textwidth}
+{Plotting functions and color parameters: (a) graph, (b)-(l) grey color=a,b,c,e,f,g,h,i,j,p,t.}
+
+% 图中展示了若干数据绘图示例，图~\ref{fig:csg41}展示了使用灰度图函数$sfgrey$绘制的地震数据，而图~\ref{fig:dither41}则使用一维线图函数$sfgraph$生成。随后，应用Overlay选项将两幅图像合并，形成如图~\ref{fig:dither_test41}所示的复合图。通过类似的方法，图~\ref{fig:window41}和图~\ref{fig:csg_window41}展示了窗口截取后的数据绘图效果。
+The figure displays several data plotting examples. Figure~\ref{fig:csg41} shows seismic data plotted using the grayscale function sfgrey, while Figure~\ref{fig:dither41} is generated using the one-dimensional line plot function sfgraph. The Overlay option is then applied to merge the two images, resulting in the composite plot shown in Figure~\ref{fig:dither_test41}. Using a similar approach, Figures~\ref{fig:window41} and \ref{fig:csg_window41} demonstrate the plotting results of data after window truncation.
+\inputdir{Parameters_test}
+\multiplot{3}{csg41,window41,dither_test41,dither41,csg_window41}{width=0.13\textwidth}
+{The seismic data is plotted using the grey function in (a), while a one-dimensional line graph is generated with the graph function in (c). The Overlay option is then applied to combine both images into a composite plot shown in (c).}
+
+% 三维绘图的例子如图~\ref{fig:3ddata,3ddata2}所示。其中两幅图均使用灰度图函数$sfgrey$进行绘制，但参数设置有所不同。图~\ref{fig:3ddata}中，参数flat设置为n，表示数据以长方体进行展示；而图~\ref{fig:3ddata2}中，参数float设置为y，数据展开绘图。
+Examples of 3D plotting are shown in Figure~\ref{fig:3ddata,3ddata2}. Both subfigures are generated using the grayscale function \texttt{sfgrey}, but with different parameter settings. In Figure~\ref{fig:3ddata}, the parameter \texttt{flat=n} is used, indicating that the data is displayed as a rectangular prism. In Figure~\ref{fig:3ddata2}, the parameter \texttt{float=y} is applied, causing the data to be visualized in an unfolded manner.
+\inputdir{plot}
+\multiplot{2}{3ddata,3ddata2}{width=0.17\textwidth}
+{The 3d seismic data is plotted using the grey3 function in (a) flat=n, (b) float=y}
+
+\subsubsection{Development Module}
+
+The Madagascar software package provides powerful API interfaces that allow users to develop their own program modules. Users can write program modules in programming languages such as $C/C++$ and $Fortran$ that comply with Madagascar's specifications and integrate them into Madagascar for further invocation. In the $RSFSRC/User$ directory, users can find the source code and development documentation of Madagascar. By referring to these documents, users can create $M"name".c$ files and leverage the $sf\_$ architecture to enable data input and structured calls to Madagascar files.
+
+Through the $sf\_$ framework for data input, development can be carried out using $C$ or $Fortran$. To integrate the module, add the corresponding $name$ in the appropriate location of the $SConstruct$ file, execute $scons$ in the current directory for compilation, then navigate to $../..$ under $RSFSRC$ and run $scons install -k$ to install the updates. This process successfully installs the user's module into the software. The API interface provided by Madagascar is straightforward and user-friendly, enabling efficient program development and integration for users with basic $C$ programming skills.
+\inputdir{Other_Fig}
+\plot{lzfRSF.drawio}{width=1\columnwidth}
+{New user-defined folder under RSFSRC/User.}
+
+\subsubsection{Write article}
+The Madagascar software package provides LaTeX templates and interfaces for most journals in the geoscience field. Taking the SEG extended abstract LaTeX format $segabs.cls$ as an example, after completing a research experiment, users can directly generate LaTeX files and PDFs compliant with SEG journal format through the SConstruct file. First, create a new folder and generate an SConstruct file within it, then add the following code:
+\begin{lstlisting}[frame=single, breaklines=true, basicstyle=\ttfamily\small]
+    from rsf.tex import *
+    import os
+    os.environ['PSTEXPENOPTS']='color=y fat=3 fatmult=1.5'
+    import sys
+    env=Environment()
+    if sys.platform == 'darwin':
+        env['ENV']['PATH'] = ':'.join(['/opt/local/bin',env['ENV']['PATH']])
+    # os.environ['PSTEXPENOPTS']='color=y fat=3 fatmult=1.5'
+    Paper('paper1',lclass='segabs',options='10pt,a4paper',use='fancyvrb,mathrsfs,amsmath',color="ALL")
+    End ()
+\end{lstlisting}
+% 其中paper1为在当前文件夹下的tex文件名。注意，该tex文件不需要添加$\usepackage$以及$\begin{document}$。lclass后面表示所使用的期刊格式，options表示页面格式，use表示所使用的latex宏包。然后在同一文件夹下可以新建各种绘图所需的文件夹，在对应的文件夹下创建SConstruct文件，编写数据处理以及绘图代码。绘制出的所有图片会被放在对应子文件夹的\Fig文件夹下。利用$vpconvert$命令可以将图片格式转换为期刊所需的格式如pdf或png等。最后回到主文件夹下，在$tex$文件中可以极为方便的进行图片调用。所有数据修改完成后，在主文件夹下下执行sftour scons lock会遍历当前文件夹下的所有文件夹，寻找Sconstruct并执行锁定，然后执行scons paper.pdf 或scons paper.read 生成对应的pdf文章或直接显示。这时，每次只要修改数据处理或者绘图代码，Mada都会根据修改的内容自动更新文章内容而不是重新从头编译。
+The file paper1 refers to the name of the main LaTeX file in the current directory. Note that this LaTeX file does not require the inclusion of \texttt{\textbackslash usepackage} or \texttt{\textbackslash begin\{document\}}. The $lclass$ parameter specifies the journal format to be used, $options$ defines the page layout settings, and $use$ indicates the LaTeX macro packages to be loaded.
+
+Subsequently, various subdirectories can be created within the same folder to organize plotting-related files. In each corresponding subdirectory, an $SConstruct$ file should be created, containing the code for data processing and plotting. All generated figures will be stored in the $\\Fig$ folder under the respective subdirectory. The $vpconvert$ command can be used to convert image formats to those required by the journal, such as PDF or PNG.
+
+Finally, return to the main directory, where figures can be easily referenced in the main LaTeX file. After completing all data modifications, execute sftour scons lock in the main directory. This command traverses all subdirectories, locates $SConstruct$ files, and locks them. Then, run $scons paper.pdf$ or $scons paper.read$ to generate the corresponding PDF article or display it directly. At this point, whenever data processing or plotting code is modified, Madagascar will automatically update the article content based on the changes instead of recompiling from scratch.
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=.97\columnwidth]{./Other_Fig/Fig/flder}
+    \caption{Article writing folder structure}
+    \label{code1}
+\end{figure}
+% 在文件夹下最后会编译$.ltx$文件以及对应的pdf文件，$.ltx$即完整的tex文件，用户可以直接将其提交到对应的期刊，亦或是使用其他的latex编辑器比如overleaf进行二次编辑。
+In the folder, the $.ltx$ file and the corresponding PDF file will ultimately be compiled. The $.ltx$ file is a complete LaTeX document that users can directly submit to relevant journals or further edit using other LaTeX editors, such as Overleaf.
+\section{Conclusion}
+This paper provides a brief introduction to the Madagascar software package, covering its installation, architecture, functionalities, and usage. Madagascar is a powerful open-source tool for geoscientific data processing and visualization, offering a wide range of program modules and plotting capabilities. It also provides robust API interfaces for users to develop their own modules and supports efficient scientific writing through LaTeX templates. By leveraging Madagascar, researchers can streamline their data processing workflows, enhance collaboration, and facilitate reproducible research in the field of geophysics. The content of the article partially references \cite{zuberi}.
+\section{Declaration of competing interest}
+The authors affirm that there are no conflicts of interest, financial or personal, that could have had a potential to affect the outcomes presented in this paper.
+\section{Acknowledgments}
+The project is funded by the National Natural Science Foundation of China (Grant No. 42374160) and  CNPC Innovation\\(2024DQ02-0139).
+
+% \onecolumn
+
+% \setfigdir{../need_analyse/Fig}
+% \multiplot{4}{marmousi_hyper,marmousi_loss,marmousi_interps_1,marmousi_error}{width=0.2\textwidth}
+% {Interpolation Results for Forward-Modeled Data from the Marmousi Velocity Model:
+% (a) Original record,
+% (b) Missing record,
+% (c) Interpolation result,
+% (d) Processing Error.}
+
+% \setfigdir{../need_analyse/Fig}
+% \multiplot{4}{bao9_hyper,bao9_loss,bao9_interps_1,bao9_error}{width=0.2\textwidth}
+% {Interpolation Results for Real Data:
+% (a) Original record,
+% (b) Missing record,
+% (c) Interpolation result,
+% (d) Processing Error.}
+
+
+
+% \append{The source of the bibliography}
+% \verbatiminput{example.bib}
+
+% \twocolumn
+
+% \let\cleardoublepage\relax
+\bibliographystyle{seg}
+\bibliography{example}
+
+% \let\clearpage\relax

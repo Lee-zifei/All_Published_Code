@@ -1,0 +1,23 @@
+\newcommand{\SortNoop}[1]{}
+\begin{thebibliography}{}
+\itemsep0pt
+
+\bibitem[Ke et~al., 2024]{ke2024hybrid}
+Ke, C.-F., S.-H. Zu, J.-X. Cao, X.-D. Jiang, C. Li, and X.-Y. Liu,  2024, A hybrid wudt-nafnet for simultaneous source data deblending: Petroleum Science, {\bfseries 21}, 1649--1659.
+
+\bibitem[Mahdad et~al., 2011a]{mahdadSeparationBlendedData2011}
+Mahdad, A., P. Doulgeris, and G. Blacquiere,  2011a, Separation of blended data by iterative estimation and subtraction of blending interference noise: Geophysics, {\bfseries 76}, Q9--Q17.
+
+\bibitem[Mahdad et~al., 2011b]{mahdad2011}
+--------, 2011b, Separation of blended data by iterative estimation and subtraction of blending interference noise: Geophysics, {\bfseries 76}, Q9--Q17.
+
+\bibitem[Sen et~al., 2019]{sen2019}
+Sen, S., S. Kainkaryam, C. Ong, and A. Sharma,  2019, Interpolation of regularly sampled prestack seismic data with self-supervised learning: {{SEG Technical Program Expanded Abstracts}} 2019, Society of Exploration Geophysicists, 3974--3978.
+
+\bibitem[Wang et~al., 2024]{wangSelfsupervisedSimultaneousDeblending2024}
+Wang, B.-F., S.-C. Lin, and X.-Y. Chen,  2024, Self-supervised simultaneous deblending and interpolation of incomplete blended data using a multistep blind-trace {{U-Net}}: Petroleum Science,  S1995822624003443.
+
+\bibitem[Zhou and Li, 2018]{zhouSimultaneousDeblendingInterpolation2018}
+Zhou, Y., and S. Li,  2018, Simultaneous deblending and interpolation using structure-oriented filters: Journal of Applied Geophysics, {\bfseries 150}, 230--243.
+
+\end{thebibliography}

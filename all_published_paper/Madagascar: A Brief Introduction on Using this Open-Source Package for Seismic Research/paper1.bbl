@@ -1,0 +1,9 @@
+\newcommand{\SortNoop}[1]{}
+\begin{thebibliography}{}
+\itemsep0pt
+
+\bibitem[Zuberi et~al., 2004]{zuberi}
+Zuberi, M.~A., T. Alkhalifah, and C. Saragoitis,  2004, Madagascar
+  {{Programming Reference Manual}}.
+
+\end{thebibliography}

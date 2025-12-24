@@ -1,0 +1,15 @@
+from rsf.tex import *
+import os
+os.environ['PSTEXPENOPTS']='color=y fat=3 fatmult=1.5'
+
+# options='manuscript,revised
+## add pdflatex into default PATH
+import sys
+env=Environment()
+if sys.platform == 'darwin':
+    env['ENV']['PATH'] = ':'.join(['/opt/local/bin',env['ENV']['PATH']])
+
+# os.environ['PSTEXPENOPTS']='color=y fat=3 fatmult=1.5'
+Paper('paper1',lclass='segabs',options='10pt,a4paper,manuscript',use='listings,caption,fancyvrb,mathrsfs,amsmath',color="ALL")
+
+End ()

@@ -1,0 +1,17 @@
+\newcommand{\SortNoop}[1]{}
+\begin{thebibliography}{}
+\itemsep0pt
+
+\bibitem[Ke et~al., 2024]{ke2024hybrid}
+Ke, C.-F., S.-H. Zu, J.-X. Cao, X.-D. Jiang, C. Li, and X.-Y. Liu,  2024, A hybrid wudt-nafnet for simultaneous source data deblending: Petroleum Science, {\bfseries 21}, 1649--1659.
+
+\bibitem[Mahdad et~al., 2011a]{mahdadSeparationBlendedData2011}
+Mahdad, A., P. Doulgeris, and G. Blacquiere,  2011a, Separation of blended data by iterative estimation and subtraction of blending interference noise: Geophysics, {\bfseries 76}, Q9--Q17.
+
+\bibitem[Mahdad et~al., 2011b]{mahdad2011}
+--------, 2011b, Separation of blended data by iterative estimation and subtraction of blending interference noise: Geophysics, {\bfseries 76}, Q9--Q17.
+
+\bibitem[Wang et~al., 2024]{wangSeisFusionConstrainedDiffusion2024}
+Wang, S., F. Deng, P. Jiang, Z. Gong, X. Wei, and Y. Wang,  2024, {{SeisFusion}}: {{Constrained Diffusion Model With Input Guidance}} for 3-{{D Seismic Data Interpolation}} and {{Reconstruction}}: IEEE Transactions on Geoscience and Remote Sensing, {\bfseries 62}, 1--15.
+
+\end{thebibliography}
