@@ -1,0 +1,97 @@
+# -*- coding: utf-8 -*-
+# ==================================================================================
+#    Copyright (C) 2024 Chengdu University of Technology.
+#    Copyright (C) 2024 Zifei Li.
+#    
+#    Filename：env.py
+#    Author：Zifei Li
+#    Institute：Chengdu University of Technology
+#    Email：202005050218@stu.cdut.edu.cn
+#    Work：2024/08/21/
+#    Function：
+#    
+#    This program is free software: you can redistribute it and/or modify it 
+#    under the terms of the GNU General Public License as published by the Free
+#    Software Foundation, either version 3 of the License, or an later version.
+#=================================================================================
+import sys, os, platform
+if 'macos' in platform.platform().lower(): 
+    myprog_path='/Users/lzf/Documents/cdut_zsh_group/python' 
+elif 'linux' in platform.platform().lower(): 
+    myprog_path='/media/lzf/Work/code/python' 
+    myprog_path_survey='/home/lzf/code/python' 
+else: 
+    myprog_path='L:\data\code\python' 
+sys.path.append(myprog_path)
+sys.path.append(myprog_path_survey)
+from subfunctions import *  
+
+import torch
+from models import build_model
+# import os
+import argparse
+import numpy as np
+from config import get_config
+from collections import OrderedDict
+import matplotlib.pyplot as plt
+import torch
+from models import build_model
+import os
+import argparse
+import numpy as np
+from config import get_config
+from collections import OrderedDict
+from data import build_test_loader
+from seislet import patch_replication_callback, DataParallelWithCallback
+from data.build_iter_dataset import patching_test
+from models.NAFNet_arch import  NAFNet
+  
+  
+###########################################################################################
+def result (data,other):
+    Result (data,
+             '''
+             grey title=%s label1='Time' unit1='s' label2='Trace' unit2=''
+             color=g screenratio=1.5 wanttitle=n pclip=99 bar=y scalebar=n
+             %s 
+             '''%(data,other))
+def plot (data,other):
+    Plot (data,
+             '''
+             grey title=%s label1='Time' unit1='s' label2='Trace' unit2=''
+             color=g screenratio=1.5 wanttitle=n clip=3 bar=y scalebar=n
+             %s 
+             '''%(data,other))
+def result3 (data, other):
+     Result (data,
+            '''
+            byte pclip=99 bar=bar.rsf %s| grey3 frame1=150 frame2=50 frame3=15
+            title='' label1='Time' unit1='s' label2='X' unit2='' label3='Y' unit3=''
+            flat=n wantaxis=y wanttitle=n color=g point1=0.85 point2=0.64 screenratio=1.5
+            '''%(other))
+def plot3 (data, other):
+     Plot (data,
+            '''
+            byte clip=3e+6 bar=bar.rsf %s| grey3 frame1=150 frame2=50 frame3=15
+            title='' label1='Time' unit1='s' label2='X' unit2='' label3='Y' unit3=''
+            flat=n wantaxis=y wanttitle=n color=g point1=0.85 point2=0.64 screenratio=1.5 o1num=0 d1num=2 n1tic=3 
+            '''%(other))
+def wig (data, other):
+    Result (data,
+            '''
+            wiggle title=%s transp=y yreverse=y label1='Time' unit1='s' label2='Trace' unit2=''
+            screenratio=1
+            %s
+            '''%(data, other))
+def graph (data, other):
+    Result (data,
+            '''
+            graph title=%s label1='Frequency' unit1='Hz' label2='Amplitude' unit2='' screenratio=0.5
+            %s
+            '''%(data, other))
+###########################################################################################
+
+
+
+
+End ()
